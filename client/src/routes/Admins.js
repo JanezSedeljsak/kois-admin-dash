@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { List, Avatar } from "antd";
+import { List, Avatar, Button } from "antd";
 
 export default function() {
   const data = [
@@ -11,6 +11,10 @@ export default function() {
 
   return (
     <>
+      <Button type="primary" shape="round" icon="plus" size={"large"}>
+        Dodaj novega administratorja
+      </Button>
+      <hr />
       <List
         itemLayout="horizontal"
         dataSource={data}

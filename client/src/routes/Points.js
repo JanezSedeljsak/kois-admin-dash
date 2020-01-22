@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Card } from "antd";
+import { Card, Button } from "antd";
 
 const { Meta } = Card;
 
 export default function() {
   return (
     <>
+      <Button type="primary" shape="round" icon="plus" size={"large"} >Dodaj novo točko</Button>
+      <hr />
       <div
         style={{
           display: "flex",
