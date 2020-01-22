@@ -29,24 +29,26 @@ export default function() {
         collapsed={collapsed}
         onCollapse={setCollapsed}
       >
-        <div style={{ padding: 20 }}>
-          <img
-            style={{
-              width: "100%",
-              marginBottom: 15
-            }}
-            src={KoisLogo}
-          />
-          <img
-            style={{
-              width: "100%",
-              padding: 15,
-              paddingBottom: 0
-            }}
-            src={ScvLogo}
-          />
-        </div>
-        <hr />
+        { !collapsed && <>
+            <div style={{ padding: 20 }}>
+              <img
+                style={{
+                  width: "100%",
+                  marginBottom: 15
+                }}
+                src={KoisLogo}
+              />
+              <img
+                style={{
+                  width: "100%",
+                  padding: 15,
+                  paddingBottom: 0
+                }}
+                src={ScvLogo}
+              />
+            </div>
+            <hr />
+        </>}
         <Menu
           onClick={e => (window.location = e.key)}
           theme="dark"
@@ -55,23 +57,23 @@ export default function() {
         >
           <Menu.Item key="/points">
             <Icon type="environment" />
-            <span>Points</span>
+            <span>Točke</span>
           </Menu.Item>
           <Menu.Item key="/admins">
             <Icon type="user" />
-            <span>Admins</span>
+            <span>Administratorji</span>
           </Menu.Item>
           <Menu.Item key="/documentation">
             <Icon type="file-search" />
-            <span>Documentation</span>
+            <span>Dokumentacija</span>
           </Menu.Item>
           <Menu.Item key="/tasks">
             <Icon type="paper-clip" />
-            <span>Tasks</span>
+            <span>Zahtevki</span>
           </Menu.Item>
           <Menu.Item key="/login">
             <Icon type="logout" />
-            <span>Logout</span>
+            <span>Odjava</span>
           </Menu.Item>
         </Menu>
       </Sider>
@@ -91,7 +93,10 @@ export default function() {
         <Router>
           <Content style={{ margin: "0 16px" }}>
             <Breadcrumb style={{ margin: "16px 0" }}></Breadcrumb>
-            <div style={{ padding: 24, background: "#fff", minHeight: "40vh" }}>
+            <div
+              id="container"
+              style={{ padding: 24, background: "#fff", minHeight: "40vh" }}
+            >
               <Switch>
                 <Route path="/points">
                   <Points />

@@ -1,27 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Icon, Input, Button, Checkbox } from "antd";
 
 export default function Login() {
+
+  useEffect(() => {
+      document.getElementById('container').style.background = 'transparent';
+  });
+
   return (
     <Form style={{ width: "50%", minWidth: "300px" }}>
       <Form.Item>
-          <Input
-            prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-            placeholder="Username"
-          />
+        <Input
+          prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
+          placeholder="e-pošta"
+        />
       </Form.Item>
       <Form.Item>
-          <Input
-            prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-            type="password"
-            placeholder="Password"
-          />
+        <Input
+          prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+          type="password"
+          placeholder="geslo"
+        />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
-          Log in
+          Prijava
         </Button>
-        Or <a href="">register now!</a>
       </Form.Item>
     </Form>
   );
