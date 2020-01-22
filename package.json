@@ -1,0 +1,23 @@
+{
+  "name": "kois-admin-dash",
+  "version": "1.0.0",
+  "description": "Api for mobile application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JanezSedeljsak/kois-admin-dash.git"
+  },
+  "author": "Janez Sedeljsak & Samo Pritrznik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JanezSedeljsak/kois-admin-dash/issues"
+  },
+  "homepage": "https://github.com/JanezSedeljsak/kois-admin-dash#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
