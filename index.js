@@ -13,6 +13,10 @@ app.get('/api/getList', (req,res) => {
     console.log('Sent list of items');
 });
 
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
 // Handles any requests that don't match the ones above
 /*app.get('*', (req,res) =>{
     res.sendFile(path.join(__dirname+'/client/build/index.html'));
