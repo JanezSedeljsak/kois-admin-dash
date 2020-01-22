@@ -4,7 +4,7 @@ import "./index.css";
 import { Layout, Menu, Breadcrumb, Icon, Typography } from "antd";
 import KoisLogo from "./images/scvlogo.png";
 import ScvLogo from "./images/koislogo.png";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 //rotes import
 import Login from "./routes/Login";
@@ -22,75 +22,77 @@ export default function() {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider
-        style={{ background: "#345" }}
-        width={"300"}
-        collapsible
-        collapsed={collapsed}
-        onCollapse={setCollapsed}
-      >
-        { !collapsed && <>
-            <div style={{ padding: 20 }}>
-              <img
-                style={{
-                  width: "100%",
-                  marginBottom: 15
-                }}
-                src={KoisLogo}
-              />
-              <img
-                style={{
-                  width: "100%",
-                  padding: 15,
-                  paddingBottom: 0
-                }}
-                src={ScvLogo}
-              />
-            </div>
-            <hr />
-        </>}
-        <Menu
-          onClick={e => (window.location = e.key)}
-          theme="dark"
+      <Router>
+        <Sider
           style={{ background: "#345" }}
-          mode="inline"
+          width={"300"}
+          collapsible
+          collapsed={collapsed}
+          onCollapse={setCollapsed}
         >
-          <Menu.Item key="/points">
-            <Icon type="environment" />
-            <span>Točke</span>
-          </Menu.Item>
-          <Menu.Item key="/admins">
-            <Icon type="user" />
-            <span>Administratorji</span>
-          </Menu.Item>
-          <Menu.Item key="/documentation">
-            <Icon type="file-search" />
-            <span>Dokumentacija</span>
-          </Menu.Item>
-          <Menu.Item key="/tasks">
-            <Icon type="paper-clip" />
-            <span>Zahtevki</span>
-          </Menu.Item>
-          <Menu.Item key="/login">
-            <Icon type="logout" />
-            <span>Odjava</span>
-          </Menu.Item>
-        </Menu>
-      </Sider>
-      <Layout>
-        <Header
-          style={{
-            background: "#002140",
-            padding: 10,
-            borderLeft: "1px solid white",
-            boxShadow: "0 4px 2px -2px gray"
-          }}
-        >
-          <Title style={{ color: "#fff" }}>
-            <Icon type="dashboard" /> Kois Administracija
-          </Title>
-        </Header>
-        <Router>
+          {!collapsed && (
+            <>
+              <div style={{ padding: 20 }}>
+                <img
+                  style={{
+                    width: "100%",
+                    marginBottom: 15
+                  }}
+                  src={KoisLogo}
+                />
+                <img
+                  style={{
+                    width: "100%",
+                    padding: 15,
+                    paddingBottom: 0
+                  }}
+                  src={ScvLogo}
+                />
+              </div>
+              <hr />
+            </>
+          )}
+          <Menu theme="dark" style={{ background: "#345" }} mode="inline">
+            <Menu.Item key="/points">
+            <Link to="/points"/>
+              <Icon type="environment" />
+              <span>Točke</span>
+            </Menu.Item>
+            <Menu.Item key="/admins">
+            <Link to="/admins"/>
+              <Icon type="user" />
+              <span>Administratorji</span>
+            </Menu.Item>
+            <Menu.Item key="/documentation">
+            <Link to="/documentation"/>
+              <Icon type="file-search" />
+              <span>Dokumentacija</span>
+            </Menu.Item>
+            <Menu.Item key="/tasks">
+            <Link to="/tasks"/>
+              <Icon type="paper-clip" />
+              <span>Zahtevki</span>
+            </Menu.Item>
+            <Menu.Item key="/login">
+                <Link to="/login"/>
+              <Icon type="logout" />
+              <span>Odjava</span>
+            </Menu.Item>
+          </Menu>
+        </Sider>
+        <Layout>
+          <Header
+            style={{
+              background: "#002140",
+              padding: 10,
+              borderLeft: "1px solid white",
+              boxShadow: "0 4px 2px -2px gray"
+            }}
+          >
+            <Title style={{ color: "#fff" }}>
+              <Icon type="dashboard" /> Kois Administracija
+            </Title>
+          </Header>
           <Content style={{ margin: "0 16px" }}>
             <Breadcrumb style={{ margin: "16px 0" }}></Breadcrumb>
             <div
@@ -116,11 +118,11 @@ export default function() {
               </Switch>
             </div>
           </Content>
-        </Router>
-        <Footer style={{ textAlign: "center" }}>
-          Samo Pritrznik & Janez Sedeljsak 2019/20 ©
-        </Footer>
-      </Layout>
+          <Footer style={{ textAlign: "center" }}>
+            Samo Pritrznik & Janez Sedeljsak 2019/20 ©
+          </Footer>
+        </Layout>
+      </Router>
     </Layout>
   );
 }

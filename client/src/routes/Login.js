@@ -3,10 +3,6 @@ import { Form, Icon, Input, Button, Checkbox } from "antd";
 
 export default function Login() {
 
-  useEffect(() => {
-      document.getElementById('container').style.background = 'transparent';
-  });
-
   return (
     <Form style={{ width: "50%", minWidth: "300px" }}>
       <Form.Item>
