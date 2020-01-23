@@ -52,7 +52,7 @@ function RegistrationForm({ form }) {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form style={{ width: "50%" }} onSubmit={handleSubmit}>
       <Form.Item label="ime & priimek">
         {getFieldDecorator("fullname", {
           rules: [

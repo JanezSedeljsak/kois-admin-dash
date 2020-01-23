@@ -32,22 +32,22 @@ export default function() {
         <Login />
       </Route>
       <Route path="/new/point">
-        <FPoint />
+        <FPoint {...{ type: 'new' }} />
       </Route>
       <Route path="/new/admin">
-        <FAdmin />
+        <FAdmin {...{ type: 'new' }} />
       </Route>
       <Route path="/new/task">
-        <FTask />
+        <FTask {...{ type: 'new' }} />
       </Route>
       <Route path="/edit/point/:id">
-        <FPoint />
+        <FPoint {...{ type: 'edit' }} />
       </Route>
       <Route path="/edit/admin/:id">
-        <FAdmin />
+        <FAdmin {...{ type: 'edit' }} />
       </Route>
       <Route path="/edit/task/:id">
-        <FTask />
+        <FTask {...{ type: 'edit' }} />
       </Route>
     </Switch>
   );
