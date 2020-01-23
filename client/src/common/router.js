@@ -1,5 +1,4 @@
-import { Link, Switch, Route } from "react-router-dom";
-import { Icon } from "antd";
+import { Switch, Route } from "react-router-dom";
 import React from "react";
 
 //rotes import
