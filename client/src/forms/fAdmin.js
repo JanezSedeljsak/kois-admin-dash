@@ -35,7 +35,6 @@ function RegistrationForm({ form }) {
   };
 
   const compareToFirstPassword = (rule, value, callback) => {
-    const { form } = this.props;
     if (value && value !== form.getFieldValue("password")) {
       callback("Two passwords that you enter is inconsistent!");
     } else {
@@ -44,8 +43,7 @@ function RegistrationForm({ form }) {
   };
 
   const validateToNextPassword = (rule, value, callback) => {
-    const {} = this.props;
-    if (value && this.state.confirmDirty) {
+    if (value && confirmDirty) {
       form.validateFields(["confirm"], { force: true });
     }
     callback();
