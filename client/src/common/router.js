@@ -13,6 +13,9 @@ import FPoint from "./../forms/fPoint";
 import FAdmin from "./../forms/fAdmin";
 import FTask from "./../forms/fTask";
 
+//import detail views
+import DPoint from './../detailed/dpoint';
+
 export default function() {
   return (
     <Switch>
@@ -48,6 +51,9 @@ export default function() {
       </Route>
       <Route path="/edit/task/:id">
         <FTask {...{ type: 'edit' }} />
+      </Route>
+      <Route path="/details/point/:id">
+        <DPoint />
       </Route>
     </Switch>
   );

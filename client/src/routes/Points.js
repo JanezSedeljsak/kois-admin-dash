@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { Card, Button } from "antd";
-import KoisLink from './../common/buttonlink';
+import { Card, Button, Tooltip } from "antd";
+import KoisLink from "./../common/buttonlink";
 
 const { Meta } = Card;
 
 export default function() {
   return (
     <>
-      <KoisLink {...{ title: "Dodaj točko", link: '/new/point', icon: 'plus' }} />
+      <KoisLink
+        {...{ title: "Dodaj točko", link: "/new/point", icon: "plus" }}
+      />
       <hr />
       <div
         style={{
@@ -25,13 +27,31 @@ export default function() {
               margin: "15px"
             }}
             cover={
-              <img
-                alt="example"
-                src="https://geospatialmedia.s3.amazonaws.com/wp-content/uploads/2018/11/location-tech.jpg"
-              />
+              <img src="https://geospatialmedia.s3.amazonaws.com/wp-content/uploads/2018/11/location-tech.jpg" />
             }
           >
-            <Meta title="Random location" description="............." />
+            <Meta title="Random location" />
+            <hr />
+            <Tooltip title="Podroben ogled">
+              <Button
+                style={{ float: "right", marginLeft: "10px" }}
+                type="secondary"
+                shape="circle"
+                icon="fullscreen"
+                size={"large"}
+                href={`/details/point/${index}`}
+              />
+            </Tooltip>
+            <Tooltip title="Uredi">
+              <Button
+                style={{ float: "right" }}
+                type="primary"
+                shape="circle"
+                icon="edit"
+                size={"large"}
+                href={`/edit/point/${index}`}
+              />
+            </Tooltip>
           </Card>
         ))}
       </div>
