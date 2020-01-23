@@ -4,16 +4,19 @@ import "./index.css";
 import { Layout, Menu, Breadcrumb, Icon, Typography } from "antd";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import KoisRouter from './common/router';
-import KoisLink from "./common/link";
-import KoisLogos from './common/logos';
+import KoisRouter from "./common/router";
+import KoisLogos from "./common/logos";
+
+//import navigation
+import IsAuthNav from "./navs/isauth";
+import NonAuthNav from "./navs/nonauth";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Title } = Typography;
 
 export default function() {
   const [collapsed, setCollapsed] = useState(false);
-  //const [currentRoute, setCurrentRoute] = useState("points");
+  const [isAuth, setAuth] = useState(true);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -25,24 +28,8 @@ export default function() {
           collapsed={collapsed}
           onCollapse={setCollapsed}
         >
-          {!collapsed && <KoisLogos/>}
-          <Menu theme="dark" style={{ background: "#345" }} mode="inline">
-            <Menu.Item key="/points">
-              <KoisLink {...{ link: "/points", title: "Točke", icon: "environment" }} />
-            </Menu.Item>
-            <Menu.Item key="/admins">
-              <KoisLink {...{ link: "/admins", title: "Administratorji", icon: "user" }} />
-            </Menu.Item>
-            <Menu.Item key="/documentation">
-              <KoisLink {...{ link: "/documentation", title: "Dokumentacija", icon: "file-search" }} />
-            </Menu.Item>
-            <Menu.Item key="/tasks">
-              <KoisLink {...{ link: "/tasks", title: "Zahtevki", icon: "pushpin" }} />
-            </Menu.Item>
-            <Menu.Item key="/login">
-              <KoisLink {...{ link: "/login", title: "Odjava", icon: "logout" }} />
-            </Menu.Item>
-          </Menu>
+          {!collapsed && <KoisLogos />}
+          {isAuth ? <IsAuthNav /> : <NonAuthNav/>}
         </Sider>
         <Layout>
           <Header
@@ -63,7 +50,7 @@ export default function() {
               id="container"
               style={{ padding: 24, background: "#fff", minHeight: "40vh" }}
             >
-              <KoisRouter/>
+              <KoisRouter />
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
