@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Card, Button } from "antd";
+import KoisLink from './../common/buttonlink';
 
 const { Meta } = Card;
 
 export default function() {
   return (
     <>
-      <Button type="primary" shape="round" icon="plus" size={"large"} >Dodaj novo točko</Button>
+      <KoisLink {...{ title: "Dodaj točko", link: '/new/point', icon: 'plus' }} />
       <hr />
       <div
         style={{
@@ -15,8 +16,9 @@ export default function() {
           position: "relative"
         }}
       >
-        {[1, 2, 3, 4, 5, 6, 7, 8].map(item => (
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
           <Card
+            key={index}
             hoverable
             style={{
               flex: "0 1 calc(25% - 30px)",
