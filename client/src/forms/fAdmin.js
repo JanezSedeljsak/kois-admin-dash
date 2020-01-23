@@ -1,22 +1,7 @@
-import {
-  Form,
-  Input,
-  Tooltip,
-  Icon,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete
-} from "antd";
+import { Form, Input, Icon, Button } from "antd";
 import React, { useState } from "react";
 
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
-
-function RegistrationForm({ form }) {
+function RegistrationForm({ form, type }) {
   const [confirmDirty, setConfirmDirty] = useState(false);
   const { getFieldDecorator } = form;
 
@@ -50,7 +35,7 @@ function RegistrationForm({ form }) {
   };
 
   return (
-    <Form style={{ width: "50%" }} onSubmit={handleSubmit}>
+    <Form style={{ width: "50%", minWidth: "300px" }} onSubmit={handleSubmit}>
       <Form.Item label="ime & priimek">
         {getFieldDecorator("fullname", {
           rules: [
@@ -59,7 +44,11 @@ function RegistrationForm({ form }) {
               message: "Prosimo vnesite vaše ime & priimek!"
             }
           ]
-        })(<Input />)}
+        })(
+          <Input
+            prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
+          />
+        )}
       </Form.Item>
       <Form.Item label="e-pošta">
         {getFieldDecorator("email", {
@@ -73,7 +62,11 @@ function RegistrationForm({ form }) {
               message: "Prosimo vnesite vašo e-pošto!"
             }
           ]
-        })(<Input />)}
+        })(
+          <Input
+            prefix={<Icon type="mail" style={{ color: "rgba(0,0,0,.25)" }} />}
+          />
+        )}
       </Form.Item>
       <Form.Item label="geslo" hasFeedback>
         {getFieldDecorator("password", {
@@ -86,7 +79,11 @@ function RegistrationForm({ form }) {
               validator: validateToNextPassword
             }
           ]
-        })(<Input.Password />)}
+        })(
+          <Input.Password
+            prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+          />
+        )}
       </Form.Item>
       <Form.Item label="potrdi geslo" hasFeedback>
         {getFieldDecorator("confirm", {
@@ -99,11 +96,16 @@ function RegistrationForm({ form }) {
               validator: compareToFirstPassword
             }
           ]
-        })(<Input.Password onBlur={handleConfirmBlur} />)}
+        })(
+          <Input.Password
+            prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+            onBlur={handleConfirmBlur}
+          />
+        )}
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Register
+        <Button type="primary" shape="round" icon="user" htmlType="submit">
+          {type == "edit" ? "Posodobi" : "Dodaj"}
         </Button>
       </Form.Item>
     </Form>
