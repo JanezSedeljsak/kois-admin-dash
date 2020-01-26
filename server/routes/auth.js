@@ -12,6 +12,7 @@ router.get('/test', (req, res, next) => {
 
 // Sign-up
 router.post("/register-user", (req, res, next) => {
+    console.log(req.body)
     bcrypt.hash(req.body.password, 10).then((hash) => {
         const user = new userSchema({
             name: req.body.name,
