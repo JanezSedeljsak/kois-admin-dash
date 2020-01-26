@@ -3,10 +3,10 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const userSchema = require("./../models/User");
+const authorize = require('./../middlewares/jwt');
 
 // Sign-up
-router.post("/register-user", (req, res, next) => {
-    console.log(req.query)
+router.route("/register-user").post(authorize, (req, res, next) => {
     bcrypt.hash(req.query.password, 10).then((hash) => {
         const user = new userSchema({
             name: req.query.name,
@@ -27,7 +27,7 @@ router.post("/register-user", (req, res, next) => {
 });
 
 // Sign-in
-router.post("/signin", (req, res, next) => {
+router.route("/signin").post((req, res, next) => {
     let getUser;
     userSchema.findOne({
         email: req.query.email
@@ -64,7 +64,7 @@ router.post("/signin", (req, res, next) => {
 });
 
 // Get Users
-router.route('/').get((req, res) => {
+router.route('/').get(authorize, (req, res) => {
     userSchema.find((error, response) => {
         if (error) {
             return next(error)
@@ -75,7 +75,7 @@ router.route('/').get((req, res) => {
 })
 
 // Get Single User
-router.route('/user-profile/:id').get((req, res, next) => {
+router.route('/user-profile/:id').get(authorize, (req, res, next) => {
     userSchema.findById(req.params.id, (error, data) => {
         if (error) {
             return next(error);
@@ -88,7 +88,7 @@ router.route('/user-profile/:id').get((req, res, next) => {
 })
 
 // Update User
-router.route('/update-user/:id').put((req, res, next) => {
+router.route('/update-user/:id').put(authorize, (req, res, next) => {
     userSchema.findByIdAndUpdate(req.params.id, {
         $set: req.query
     }, (error, data) => {
@@ -104,7 +104,7 @@ router.route('/update-user/:id').put((req, res, next) => {
 
 
 // Delete User
-router.route('/delete-user/:id').delete((req, res, next) => {
+router.route('/delete-user/:id').delete(authorize, (req, res, next) => {
     userSchema.findByIdAndRemove(req.params.id, (error, data) => {
         if (error) {
             return next(error);
