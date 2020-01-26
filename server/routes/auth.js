@@ -1,22 +1,16 @@
 const express = require("express");
+const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const router = express.Router();
 const userSchema = require("./../models/User");
-
-router.get('/test', (req, res, next) => {
-    res.status(200).json({
-        msg: "test for auth route"
-    })
-});
 
 // Sign-up
 router.post("/register-user", (req, res, next) => {
-    console.log(req.body)
-    bcrypt.hash(req.body.password, 10).then((hash) => {
+    console.log(req.query)
+    bcrypt.hash(req.query.password, 10).then((hash) => {
         const user = new userSchema({
-            name: req.body.name,
-            email: req.body.email,
+            name: req.query.name,
+            email: req.query.email,
             password: hash
         });
         user.save().then((response) => {
@@ -36,7 +30,7 @@ router.post("/register-user", (req, res, next) => {
 router.post("/signin", (req, res, next) => {
     let getUser;
     userSchema.findOne({
-        email: req.body.email
+        email: req.query.email
     }).then(user => {
         if (!user) {
             return res.status(401).json({
@@ -44,7 +38,7 @@ router.post("/signin", (req, res, next) => {
             });
         }
         getUser = user;
-        return bcrypt.compare(req.body.password, user.password);
+        return bcrypt.compare(req.query.password, user.password);
     }).then(response => {
         if (!response) {
             return res.status(401).json({
@@ -96,7 +90,7 @@ router.route('/user-profile/:id').get((req, res, next) => {
 // Update User
 router.route('/update-user/:id').put((req, res, next) => {
     userSchema.findByIdAndUpdate(req.params.id, {
-        $set: req.body
+        $set: req.query
     }, (error, data) => {
         if (error) {
             return next(error);

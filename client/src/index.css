@@ -27,3 +27,7 @@ form label {
     padding: 0 !important;
     line-height: 25px !important;
 }
+
+.ant-card-bordered {
+    border: none !important;
+}

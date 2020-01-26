@@ -1,22 +1,21 @@
 const express = require("express");
 const path = require("path");
-const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const isDev = process.env.NODE_ENV !== "production";
 const config = require("./server/database/db");
 const morgan = require("morgan");
 
-mongoose.connect(config.db);
-mongoose.Promise = global.Promise;
+const app = express();
+app.use(morgan("combined"));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(morgan("combined"));
-app.configure(function() {
-  app.use(express.bodyParser());
-  app.use(app.router);
-});
+
+const isDev = process.env.NODE_ENV !== "production";
+mongoose.connect(config.db,{ useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.set('useCreateIndex', true);
+mongoose.Promise = global.Promise;
+
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
 
@@ -32,3 +31,13 @@ const port = process.env.PORT || 5000;
 app.listen(port);
 
 console.log("App is listening on port " + port);
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});

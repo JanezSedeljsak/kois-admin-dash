@@ -23,8 +23,8 @@ export default function() {
             key={index}
             hoverable
             style={{
-              flex: "0 1 calc(25% - 30px)",
-              margin: "15px"
+              flex: "0 1 calc(25% - 16px)",
+              margin: "8px",
             }}
             cover={
               <img src="https://geospatialmedia.s3.amazonaws.com/wp-content/uploads/2018/11/location-tech.jpg" />

@@ -16,7 +16,7 @@ const { Title } = Typography;
 
 export default function() {
   const [collapsed, setCollapsed] = useState(false);
-  const [isAuth, setAuth] = useState(true);
+  const [isAuth, setAuth] = useState(localStorage.getItem("_kToken") || undefined);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
