@@ -32,15 +32,15 @@ export default class {
         return _response;
     }
 
-    static delUser() {
+    static delUser(_id, _AUTH) {
 
     }
 
-    static getUser() {
+    static getUser(_id, _AUTH) {
 
     }
 
-    static getUsers() {
+    static getUsers(_AUTH) {
 
     }
 
