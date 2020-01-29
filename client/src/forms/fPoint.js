@@ -16,7 +16,7 @@ export default function({ type }) {
   };
 
   return !modal ? (
-    <Form style={{ width: "50%", minWidth: "300px" }}>
+    <Form style={{ minWidth: "50%" }}>
       <Form.Item>
         <Button
           onClick={toggleModal}
