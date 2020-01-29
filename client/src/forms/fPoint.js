@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Icon, Input, Button, Checkbox, Modal, List, Avatar } from "antd";
 import LocationPicker from "react-location-picker";
-import KoisLink from "./../common/buttonlink";
 
 export default function({ type }) {
   const [modal, setModalVisibility] = useState(false);
@@ -75,6 +74,7 @@ export default function({ type }) {
       visible={modal}
       onOk={toggleModal}
       onCancel={toggleModal}
+      cancelButtonProps={{ style: { display: 'none' } }}
       width={"50vw"}
     >
       <LocationPicker
