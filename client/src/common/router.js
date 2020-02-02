@@ -41,7 +41,7 @@ export default function() {
 
   return (
     <Switch>
-        {_R.map(r => <Route path={r.path}>{r.component}</Route>)}
+        {_R.map(({ path, component }) => <Route key={path} path={path}>{component}</Route>)}
     </Switch>
   );
 }

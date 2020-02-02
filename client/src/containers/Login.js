@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Form, Icon, Input, Button, Checkbox } from "antd";
+import API from './../common/apimethods';
 
 function LoginForm({ form }) {
   const { getFieldDecorator } = form;
 
   const handleSubmit = e => {
     e.preventDefault();
-    form.validateFieldsAndScroll((err, values) => {
+    form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
+        let { email, password } = values;
+        let result = await API.login(values);
+        console.log(result);
         console.log("Received values of form: ", values);
       }
     });

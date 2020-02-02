@@ -6,7 +6,7 @@ const userSchema = require("./../models/User");
 const authorize = require('./../middlewares/jwt');
 
 // Sign-up
-router.route("/register").post(authorize, (req, res, next) => {
+router.route("/register").post((req, res, next) => {
     bcrypt.hash(req.query.password, 10).then((hash) => {
         const user = new userSchema({
             name: req.query.name,
@@ -64,7 +64,7 @@ router.route("/login").post((req, res, next) => {
 });
 
 // Get Users
-router.route('/').get(authorize, (req, res) => {
+router.route('/users').get(authorize, (req, res) => {
     userSchema.find((error, response) => {
         if (error) {
             return next(error)

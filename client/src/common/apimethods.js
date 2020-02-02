@@ -1,11 +1,13 @@
+import axios from 'axios';
+
 export default class {
-    static register(_name, _email, _password, _AUTH) {
+    static async register(fullname, email, password, _AUTH) {
         let _response = { ok: false, msg: 'error occured' };
-        axios.post('/api/auth/register', {
+        await axios.post('/api/auth/register', {
             params: {
-                name: _name,
-                email: _email,
-                password: _password
+                name: fullname,
+                email: email,
+                password: password
             },
             headers: {
                 'Authorization': `Token ${_AUTH}`,
@@ -18,12 +20,24 @@ export default class {
         return _response;
     }
 
-    static login(_email, _password) {
+    static async login(params) {
         let _response = { ok: false, msg: 'error occured' };
-        axios.post('/api/auth/login', {
+        await axios.post('/api/auth/login', params)
+            .then((response) => _response = response)
+            .catch(console.log);
+        
+        return _response;
+    }
+
+    static async delUser(_id, _AUTH) {
+        let _response = { ok: false, msg: 'error occured' };
+        await axios.post('/api/auth/login', {
             params: {
-                email: _email,
-                password: _password
+                id: _id
+            },
+            headers: {
+                'Authorization': `Token ${_AUTH}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
             .then((response) => _response = response)
@@ -32,19 +46,25 @@ export default class {
         return _response;
     }
 
-    static delUser(_id, _AUTH) {
+    static async getUser(_id, _AUTH) {
 
     }
 
-    static getUser(_id, _AUTH) {
-
+    static async getUsers(_AUTH) {
+        let _response = { ok: false, msg: 'error occured' };
+        await axios.get('/api/auth/users', {
+            headers: {
+                'Authorization': `Token ${_AUTH}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then((response) => _response = response)
+            .catch(console.log);
+        
+        return _response;
     }
 
-    static getUsers(_AUTH) {
-
-    }
-
-    static updateUser() {
+    static async updateUser() {
 
     }
 }
