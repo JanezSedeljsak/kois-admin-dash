@@ -20,12 +20,11 @@ export default class {
     }
 
     static async login({ email, password }) {
+        console.log("23", email, password);
         return new Promise(async (resolve, reject) => {
-            await axios.post('/api/auth/login', {
-                params: {
-                    email: email,
-                    password: password
-                },
+            await axios.post(`/api/auth/login`, {
+                email: email,
+                password: password
             })
                 .then(resolve)
                 .catch(reject);
