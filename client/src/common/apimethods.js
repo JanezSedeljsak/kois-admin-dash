@@ -70,7 +70,7 @@ export default class {
 
     static async updateUser(_id, _params) {
         return new Promise(async (resolve, reject) => {
-            await axios.put(`/api/auth/update-user/${_id}`, params)
+            await axios.put(`/api/auth/update-user/${_id}`, _params)
                 .then(resolve)
                 .catch(reject);
         });

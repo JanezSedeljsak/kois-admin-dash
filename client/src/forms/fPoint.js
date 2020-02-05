@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Form, Icon, Input, Button, Checkbox, Modal, List, Avatar } from "antd";
 import LocationPicker from "react-location-picker";
+import KoisModal from './../common/modal';
 
-export default function({ type }) {
+export default function ({ type }) {
   const [modal, setModalVisibility] = useState(false);
   const [position, setPosition] = useState({ lat: 46.4441, lng: 15.197 });
   const tabs = [];
@@ -69,20 +70,13 @@ export default function({ type }) {
       </Form.Item>
     </Form>
   ) : (
-    <Modal
-      title="Izbirnik lokacije"
-      visible={modal}
-      onOk={toggleModal}
-      onCancel={toggleModal}
-      cancelButtonProps={{ style: { display: 'none' } }}
-      width={"50vw"}
-    >
-      <LocationPicker
-        containerElement={<div style={{ height: "100%" }} />}
-        mapElement={<div style={{ height: "400px" }} />}
-        defaultPosition={position}
-        onChange={handleLocationChange}
-      />
-    </Modal>
+      <KoisModal {...{
+        content: <LocationPicker
+          containerElement={<div style={{ height: "100%" }} />}
+          mapElement={<div style={{ height: "400px" }} />}
+          defaultPosition={position}
+          onChange={handleLocationChange}
+        />
+      }} />
   );
 }
