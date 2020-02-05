@@ -19,9 +19,14 @@ export default class {
         });
     }
 
-    static async login(params) {
+    static async login({ email, password }) {
         return new Promise(async (resolve, reject) => {
-            await axios.post('/api/auth/login', params)
+            await axios.post('/api/auth/login', {
+                params: {
+                    email: email,
+                    password: password
+                },
+            })
                 .then(resolve)
                 .catch(reject);
         });

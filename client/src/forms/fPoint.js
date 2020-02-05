@@ -76,7 +76,8 @@ export default function ({ type }) {
           mapElement={<div style={{ height: "400px" }} />}
           defaultPosition={position}
           onChange={handleLocationChange}
-        />
+        />,
+        visibility: modal, toggle: toggleModal 
       }} />
   );
 }
