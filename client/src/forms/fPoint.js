@@ -7,7 +7,12 @@ export default function ({ type }) {
   const [modal, setModalVisibility] = useState(false);
   const [modalIndex, setModalIndex] = useState(null);
   const [position, setPosition] = useState({ lat: 46.4441, lng: 15.197 });
-  const tabs = [];
+  const [tabs, setTabs] = useState([]);
+  const [pointForm, setPointForm] = useState({
+    title: '',
+    images: '',
+    description: ''
+  });
 
   const handleLocationChange = ({ position, address, places }) => {
     setPosition(position);
@@ -15,23 +20,54 @@ export default function ({ type }) {
 
   const toggleModal = () => {
     setModalVisibility(!modal);
+    if (modalIndex === 'pointForm') {
+      setTabs([...tabs, pointForm]);
+      setPointForm({
+        title: '',
+        images: '',
+        description: ''
+      });
+    }
   };
 
+  const handleFormSubmit = () => {
+    let result = { position, tabs };
+    console.log(result);
+  };
 
   const getPointFormModal = () => {
     return (
       <form>
         <div class="form-group">
           <label for="exampleInputEmail1" class="bmd-label-floating">Naslov</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" />
+          <input 
+            type="text" 
+            class="form-control" 
+            value={pointForm.title} 
+            onChange={event => {
+              setPointForm({ title: event.target.value, images: pointForm.images, description: pointForm.description })
+            }} 
+          />
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1" class="bmd-label-floating">Povezave slik</label>
-          <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+          <textarea 
+            class="form-control" 
+            value={pointForm.images} 
+            onChange={event => {
+              setPointForm({ title: pointForm.title, images: event.target.value, description: pointForm.description })
+            }}
+          />
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1" class="bmd-label-floating">Opis</label>
-          <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+          <textarea 
+            class="form-control" 
+            value={pointForm.description} 
+            onChange={event => {
+              setPointForm({ title: pointForm.title, images: pointForm.images, description: event.target.value })
+            }}
+          />
         </div>
       </form>
     );
@@ -108,6 +144,7 @@ export default function ({ type }) {
       </Form.Item>
       <Form.Item>
         <Button
+          onClick={handleFormSubmit}
           type="primary"
           icon="environment"
           shape="round"
@@ -119,11 +156,11 @@ export default function ({ type }) {
       </Form.Item>
     </Form>
   ) : (
-      <KoisModal {...{
-        title: getModalTitle[modalIndex],
-        content: getModalContent(modalIndex),
-        visibility: modal, 
-        toggle: toggleModal
-      }} />
-    );
+    <KoisModal {...{
+      title: getModalTitle[modalIndex],
+      content: getModalContent(modalIndex),
+      visibility: modal, 
+      toggle: toggleModal
+    }} />
+  );
 }
