@@ -1,10 +1,10 @@
 import React from "react";
 import { Modal } from "antd";
 
-export default function ({ content, toggle, visibility }) {
+export default function ({ content, toggle, visibility, title }) {
     return (
         <Modal
-            title="Izbirnik lokacije"
+            title={title}
             visible={visibility}
             onOk={toggle}
             cancelButtonProps={{ style: { display: 'none' } }}

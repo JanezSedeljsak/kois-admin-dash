@@ -5,6 +5,7 @@ import KoisModal from './../common/modal';
 
 export default function ({ type }) {
   const [modal, setModalVisibility] = useState(false);
+  const [modalIndex, setModalIndex] = useState(null);
   const [position, setPosition] = useState({ lat: 46.4441, lng: 15.197 });
   const tabs = [];
 
@@ -16,11 +17,59 @@ export default function ({ type }) {
     setModalVisibility(!modal);
   };
 
+
+  const getPointFormModal = () => {
+    return (
+      <form>
+        <div class="form-group">
+          <label for="exampleInputEmail1" class="bmd-label-floating">Naslov</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1" class="bmd-label-floating">Povezave slik</label>
+          <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1" class="bmd-label-floating">Opis</label>
+          <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+        </div>
+      </form>
+    );
+  };
+
+  const getLocationFormModal = () => {
+    return (<LocationPicker
+      containerElement={<div style={{ height: "100%" }} />}
+      mapElement={<div style={{ height: "400px" }} />}
+      defaultPosition={position}
+      onChange={handleLocationChange}
+    />);
+  }
+
+  const getModalContent = () => {
+    switch (modalIndex) {
+
+      case 'locationPicker':
+        return getLocationFormModal();
+
+      case 'pointForm':
+        return getPointFormModal();
+
+      default: 
+        return '<p>Prišlo je do napake!</p>'
+    }
+  }
+
+  const getModalTitle = {
+    'pointForm': 'Obrazec točke',
+    'locationPicker': 'Izbirnik lokacije'
+  }
+
   return !modal ? (
     <Form style={{ minWidth: "50%" }}>
       <Form.Item>
         <Button
-          onClick={toggleModal}
+          onClick={() =>  { toggleModal(true); setModalIndex('locationPicker'); }}
           icon="select"
           shape="round"
           htmlType="button"
@@ -37,7 +86,7 @@ export default function ({ type }) {
         <hr />
       </Form.Item>
       <Form.Item>
-        <Button icon="plus" shape="round">
+        <Button icon="plus" shape="round" onClick={() =>  { toggleModal(true); setModalIndex('pointForm'); }}>
           Dodaj zavihek
         </Button>
         <List
@@ -71,13 +120,10 @@ export default function ({ type }) {
     </Form>
   ) : (
       <KoisModal {...{
-        content: <LocationPicker
-          containerElement={<div style={{ height: "100%" }} />}
-          mapElement={<div style={{ height: "400px" }} />}
-          defaultPosition={position}
-          onChange={handleLocationChange}
-        />,
-        visibility: modal, toggle: toggleModal 
+        title: getModalTitle[modalIndex],
+        content: getModalContent(modalIndex),
+        visibility: modal, 
+        toggle: toggleModal
       }} />
-  );
+    );
 }
