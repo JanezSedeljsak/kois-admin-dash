@@ -21,7 +21,8 @@ export default function ({ type }) {
   const toggleModal = () => {
     setModalVisibility(!modal);
     if (modalIndex === 'pointForm') {
-      setTabs([...tabs, pointForm]);
+      let currentPointFormResult = pointForm;
+      setTabs([...tabs, currentPointFormResult]);
       setPointForm({
         title: '',
         images: '',
@@ -38,31 +39,31 @@ export default function ({ type }) {
   const getPointFormModal = () => {
     return (
       <form>
-        <div class="form-group">
-          <label for="exampleInputEmail1" class="bmd-label-floating">Naslov</label>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1" className="bmd-label-floating">Naslov</label>
           <input 
             type="text" 
-            class="form-control" 
+            className="form-control" 
             value={pointForm.title} 
             onChange={event => {
               setPointForm({ title: event.target.value, images: pointForm.images, description: pointForm.description })
             }} 
           />
         </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1" class="bmd-label-floating">Povezave slik</label>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1" className="bmd-label-floating">Povezave slik</label>
           <textarea 
-            class="form-control" 
+            className="form-control" 
             value={pointForm.images} 
             onChange={event => {
               setPointForm({ title: pointForm.title, images: event.target.value, description: pointForm.description })
             }}
           />
         </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1" class="bmd-label-floating">Opis</label>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1" className="bmd-label-floating">Opis</label>
           <textarea 
-            class="form-control" 
+            className="form-control" 
             value={pointForm.description} 
             onChange={event => {
               setPointForm({ title: pointForm.title, images: pointForm.images, description: event.target.value })
@@ -134,8 +135,8 @@ export default function ({ type }) {
                 avatar={
                   <Avatar src="https://cdn0.iconfinder.com/data/icons/education-gamification/1000/Task_Complete-512.png" />
                 }
-                title={<a href="https://ant.design">{item.title}</a>}
-                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                title={item.title}
+                description={item.description}
               />
             </List.Item>
           )}
