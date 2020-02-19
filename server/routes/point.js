@@ -5,7 +5,7 @@ const authorize = require('./../middlewares/jwt');
 
 router.route("/point")
     .post(authorize, pointController.newPoint)
-    .get(authorize, pointController.getAllPoints)
+    .get(pointController.getAllPoints)
 
 route.route('/point/:id')
     .post(authorize, pointController.updatePoint)
