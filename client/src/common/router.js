@@ -1,5 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 import React from "react";
+import PrivateRoute from './../common/privateroute';
 
 //rotes import
 import Login from "./../containers/Login";
@@ -15,11 +16,6 @@ import FTask from "./../forms/fTask";
 
 //import detail views
 import DPoint from "./../detailed/dpoint";
-
-function requireAuth(nextState, replaceState) {
-  if (!localStorage.getItem("_kToken"))
-    replaceState({ nextPathname: nextState.location.pathname }, "/login");
-}
 
 export default function() {
   const _R = [
@@ -47,9 +43,9 @@ export default function() {
   return (
     <Switch>
       {_R.map(({ path, component, authRequired }) => (
-        <Route key={path} path={path} onEnter={authRequired ? requireAuth : true}>
-          {component}
-        </Route>
+        authRequired ? 
+            <PrivateRoute key={path} path={path} component={component} />
+            : <Route key={path} path={path}>{component}</Route>
       ))}
     </Switch>
   );
