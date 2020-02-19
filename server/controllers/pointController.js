@@ -17,7 +17,7 @@ exports.newPoint = (req, res) => {
 };
 
 exports.getPoint = (req, res) => {
-    Point.findById(req.params.resId, (err, point) => {
+    Point.findById(req.params.id, (err, point) => {
         (err) ? res.send(err) : res.json(point);
     });
 };
@@ -28,7 +28,7 @@ exports.updatePoint = (req, res) => {
     });
 };
 
-exports.deletPoint = (req, res) => {
+exports.deletePoint = (req, res) => {
     Point.remove({ _id: req.params.id }, (err, point) => {
         (err) ? res.send(err) : res.json({ message: 'res successfully deleted' });
     });

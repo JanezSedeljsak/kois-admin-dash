@@ -4,6 +4,8 @@ const pointController = require('./../controllers/pointController');
 
 router.route('/locations')
     .get(pointController.getAllLocations);
-    
+
 router.route('/location/:id')
     .get(pointController.getPoint);
+
+module.exports = router;

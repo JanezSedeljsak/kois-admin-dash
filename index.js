@@ -25,9 +25,18 @@ app.use(cors());
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
 
-//auth routes
+// auth routes
 const authRoutes = require("./server/routes/auth.js");
 app.use("/api/auth", authRoutes);
+
+// point routes
+const pointRoutes = require("./server/routes/point.js");
+app.use("/api/common", pointRoutes);
+
+// mobile api routes
+const mobileRoutes = require("./server/routes/mobile.js");
+app.use("/api/mobile", mobileRoutes);
+
 
 app.get("/*", function (req, res) {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
@@ -37,12 +46,6 @@ const port = process.env.PORT || 5000;
 app.listen(port);
 
 console.log("App is listening on port " + port);
-
-/*app.use((req, res, next) => {
-    setImmediate(() => {
-        next(new Error('Something went wrong'));
-    });
-});*/
 
 app.use(function (err, req, res, next) {
     console.error(err.message);
