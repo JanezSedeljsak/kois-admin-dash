@@ -18,22 +18,20 @@ export default function ({ type }) {
     setPosition(position);
   };
 
-  const toggleModal = () => {
-    setModalVisibility(!modal);
+  const toggleModal = () => setModalVisibility(!modal);
+
+  const hanldeOK = () => {
     if (modalIndex === 'pointForm') {
-      let currentPointFormResult = pointForm;
-      setTabs([...tabs, currentPointFormResult]);
+      let { title, images, description } = pointForm;
+      debugger;
+      setTabs([...tabs, { title, description, images: images.split('\n')}]);
       setPointForm({
         title: '',
         images: '',
         description: ''
       });
     }
-  };
-
-  const handleFormSubmit = () => {
-    let result = { position, tabs };
-    console.log(result);
+    setModalVisibility(false);
   };
 
   const getPointFormModal = () => {
@@ -81,6 +79,10 @@ export default function ({ type }) {
       defaultPosition={position}
       onChange={handleLocationChange}
     />);
+  }
+
+  const primarySubmit = () => {
+    console.log(tabs,position);
   }
 
   const getModalContent = () => {
@@ -145,7 +147,7 @@ export default function ({ type }) {
       </Form.Item>
       <Form.Item>
         <Button
-          onClick={handleFormSubmit}
+          onClick={primarySubmit}
           type="primary"
           icon="environment"
           shape="round"
@@ -161,7 +163,8 @@ export default function ({ type }) {
       title: getModalTitle[modalIndex],
       content: getModalContent(modalIndex),
       visibility: modal, 
-      toggle: toggleModal
+      toggle: toggleModal,
+      confirm: hanldeOK
     }} />
   );
 }
