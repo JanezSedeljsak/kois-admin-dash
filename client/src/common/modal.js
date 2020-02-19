@@ -1,12 +1,13 @@
 import React from "react";
 import { Modal } from "antd";
 
-export default function ({ content, toggle, visibility }) {
+export default function ({ content, toggle, visibility, title, confirm }) {
     return (
         <Modal
-            title="Izbirnik lokacije"
+            title={title}
             visible={visibility}
-            onOk={toggle}
+            onOk={confirm ? confirm : toggle}
+            onCancel={toggle}
             cancelButtonProps={{ style: { display: 'none' } }}
             width={"50vw"}
         >{content}</Modal>
