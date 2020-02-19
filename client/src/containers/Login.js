@@ -1,69 +1,43 @@
-import React, { useState, useEffect } from "react";
-import { Form, Icon, Input, Button, Checkbox } from "antd";
-import API from "./../common/apimethods";
-import { Redirect } from "react-router-dom";
+import React from 'react';
+const { createContext, useContext, useState } = React;
 
-function LoginForm({ form }) {
-  const { getFieldDecorator } = form;
-  const [logInSuccess, redirect] = useState(false);
+const ThemeContext = createContext(null);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    form.validateFieldsAndScroll(async (err, values) => {
-      if (!err) {
-        let result = await API.login(values);
-        if (result.statusText == "OK") {
-          localStorage.setItem("_kToken", result.data.token);
-          redirect(true);
-        }
-      }
-    });
-  };
+function Content() {
+  const { style, visible, toggleStyle, toggleVisible } = useContext(
+    ThemeContext
+  );
 
   return (
-    <>
-      { logInSuccess && <Redirect to="/" /> }
-      <Form style={{ width: "50%", minWidth: "300px" }} onSubmit={handleSubmit}>
-        <Form.Item label="e-pošta" hasFeedback>
-          {getFieldDecorator("email", {
-            rules: [
-              {
-                type: "email",
-                message: "Neveljavna e-pošta!"
-              },
-              {
-                required: true,
-                message: "Prosimo vnesite vašo e-pošto!"
-              }
-            ]
-          })(
-            <Input
-              prefix={<Icon type="mail" style={{ color: "rgba(0,0,0,.25)" }} />}
-            />
-          )}
-        </Form.Item>
-        <Form.Item label="geslo" hasFeedback>
-          {getFieldDecorator("password", {
-            rules: [
-              {
-                required: true,
-                message: "Prosimo vnesite vaše geslo!"
-              }
-            ]
-          })(
-            <Input.Password
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" shape="round" icon="user" htmlType="submit">
-            Prijava
-          </Button>
-        </Form.Item>
-      </Form>
-    </>
+    <div>
+      <p>
+        The theme is <em>{style}</em> and state of visibility is
+        <em> {visible.toString()}</em>
+      </p>
+      <button onClick={toggleStyle}>Change Theme</button>
+      <button onClick={toggleVisible}>Change Visibility</button>
+    </div>
   );
 }
 
-export default Form.create({ name: "login" })(LoginForm);
+function App() {
+  const [style, setStyle] = useState("light");
+  const [visible, setVisible] = useState(true);
+
+  function toggleStyle() {
+    setStyle(style => (style === "light" ? "dark" : "light"));
+  }
+  function toggleVisible() {
+    setVisible(visible => !visible);
+  }
+
+  return (
+    <ThemeContext.Provider
+      value={{ style, visible, toggleStyle, toggleVisible }}
+    >
+      <Content />
+    </ThemeContext.Provider>
+  );
+}
+
+export default App;

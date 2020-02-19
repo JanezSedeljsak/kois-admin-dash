@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default class {
-    static async register(fullname, email, password, _AUTH) {
+    static async register({ fullname, email, password, _AUTH }) {
         return new Promise(async (resolve, reject) => {
             await axios.post('/api/auth/register', {
                 params: {
