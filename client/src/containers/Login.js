@@ -1,43 +1,58 @@
-import React from 'react';
-const { createContext, useContext, useState } = React;
+import React from "react";
+import { Button } from 'antd';
+const { useState } = React;
 
-const ThemeContext = createContext(null);
 
-function Content() {
-  const { style, visible, toggleStyle, toggleVisible } = useContext(
-    ThemeContext
-  );
+export default () => {
+    const [form, setForm] = useState({
+        email: "",
+        password: ""
+    });
 
-  return (
-    <div>
-      <p>
-        The theme is <em>{style}</em> and state of visibility is
-        <em> {visible.toString()}</em>
-      </p>
-      <button onClick={toggleStyle}>Change Theme</button>
-      <button onClick={toggleVisible}>Change Visibility</button>
-    </div>
-  );
-}
+    const validateForm = () => {
+        const { email , password } = form;
+        return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) && password.length > 4;
+    };
 
-function App() {
-  const [style, setStyle] = useState("light");
-  const [visible, setVisible] = useState(true);
+    const handleLogin = () => {
+        console.log(form);
+    };
 
-  function toggleStyle() {
-    setStyle(style => (style === "light" ? "dark" : "light"));
-  }
-  function toggleVisible() {
-    setVisible(visible => !visible);
-  }
-
-  return (
-    <ThemeContext.Provider
-      value={{ style, visible, toggleStyle, toggleVisible }}
-    >
-      <Content />
-    </ThemeContext.Provider>
-  );
-}
-
-export default App;
+    return (
+        <form>
+            <div className="form-group">
+                <label className="bmd-label-floating">E-pošta</label>
+                <input 
+                    type="email" 
+                    className="form-control" 
+                    value={form.email} 
+                    minLength="5"
+                    onChange={event => {
+                        setForm({ email: event.target.value, password: form.password })
+                    }}
+                />
+            </div>
+            <div className="form-group">
+                <label className="bmd-label-floating">Geslo</label>
+                <input 
+                    type="password" 
+                    minLength="5"
+                    className="form-control" 
+                    value={form.password} 
+                    onChange={event => {
+                        setForm({ email: form.email, password: event.target.value })
+                    }}
+                />
+            </div>
+            <Button
+                type="primary"
+                icon="login"
+                shape="round"
+                className="login-form-button"
+                onClick={handleLogin}
+                disabled={!validateForm()}
+            >Prijava
+            </Button>
+        </form>
+    );
+};
