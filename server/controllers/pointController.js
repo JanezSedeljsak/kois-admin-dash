@@ -1,37 +1,35 @@
 'use strict';
-const mongoose = require('mongoose');
-const jwt = require("jsonwebtoken");
 const Point = require("./../models/Point");
 
-exports.getAllPoints = function (req, res) {
-    Point.find({}, (err, res) =>  (err) ? res.send(err) : res.json(res));
+exports.getAllPoints = (req, res) => {
+    Point.find({}, (err, point) =>  (err) ? res.send(err) : res.json(point));
 };
 
-exports.getAllLocations = function (req, res) {
-    Point.find({}, (err, res) =>  (err) ? res.send(err) : res.json(res));
+exports.getAllLocations = (req, res) => {
+    Point.find({}, (err, point) =>  (err) ? res.send(err) : res.json(point));
 }
 
-exports.newPoint = function (req, res) {
+exports.newPoint = (req, res) => {
     const newPoint = new Point(req.body);
-    newPoint.save(function (err, res) {
-        (err) ? res.send(err) : res.json(res);
+    newPoint.save((err, point) => {
+        (err) ? res.send(err) : res.json(point);
     });
 };
 
-exports.getPoint = function (req, res) {
-    Point.findById(req.params.resId, function (err, res) {
-        (err) ? res.send(err) : res.json(res);
+exports.getPoint = (req, res) => {
+    Point.findById(req.params.resId, (err, point) => {
+        (err) ? res.send(err) : res.json(point);
     });
 };
 
-exports.updatePoint = function (req, res) {
-    Point.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, res) => {
-        (err) ? res.send(err) : res.json(res);
+exports.updatePoint = (req, res) => {
+    Point.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, point) => {
+        (err) ? res.send(err) : res.json(point);
     });
 };
 
-exports.deletPoint = function (req, res) {
-    Point.remove({ _id: req.params.id }, (err, res) => {
+exports.deletPoint = (req, res) => {
+    Point.remove({ _id: req.params.id }, (err, point) => {
         (err) ? res.send(err) : res.json({ message: 'res successfully deleted' });
     });
 };
