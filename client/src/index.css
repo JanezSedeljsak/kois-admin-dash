@@ -31,3 +31,11 @@ form label {
 .ant-card-bordered {
     border: none !important;
 }
+
+.ant-modal-header {
+  background-color: #166488 !important;
+}
+
+.ant-modal-close, .ant-modal-title {
+  color: #ccc !important;
+}

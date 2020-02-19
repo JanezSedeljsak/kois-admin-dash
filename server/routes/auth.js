@@ -7,10 +7,10 @@ const authorize = require('./../middlewares/jwt');
 
 // Sign-up
 router.route("/register").post((req, res, next) => {
-    bcrypt.hash(req.query.password, 10).then((hash) => {
+    bcrypt.hash(req.body.password, 10).then((hash) => {
         const user = new userSchema({
-            name: req.query.name,
-            email: req.query.email,
+            name: req.body.name,
+            email: req.body.email,
             password: hash
         });
         user.save().then((response) => {
@@ -30,7 +30,7 @@ router.route("/register").post((req, res, next) => {
 router.route("/login").post((req, res, next) => {
     let getUser;
     userSchema.findOne({
-        email: req.query.email
+        email: req.body.email
     }).then(user => {
         if (!user) {
             return res.status(401).json({
@@ -38,7 +38,7 @@ router.route("/login").post((req, res, next) => {
             });
         }
         getUser = user;
-        return bcrypt.compare(req.query.password, user.password);
+        return bcrypt.compare(req.body.password, user.password);
     }).then(response => {
         if (!response) {
             return res.status(401).json({
@@ -90,7 +90,7 @@ router.route('/user-profile/:id').get(authorize, (req, res, next) => {
 // Update User
 router.route('/update-user/:id').put(authorize, (req, res, next) => {
     userSchema.findByIdAndUpdate(req.params.id, {
-        $set: req.query
+        $set: req.body
     }, (error, data) => {
         if (error) {
             return next(error);

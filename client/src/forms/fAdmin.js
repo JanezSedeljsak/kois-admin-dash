@@ -11,7 +11,7 @@ function RegistrationForm({ form, type }) {
         form.validateFieldsAndScroll(async (err, values) => {
             if (!err) {
                 let { fullname, email, password } = values;
-                let result = await API.register({ fullname, email, password, _AUTH: "tkn" });
+                let result = await API.register({ fullname, email, password, _AUTH: localStorage.getItem('_kToken') });
                 console.log(result);
                 console.log("Received values of form: ", values);
             }
