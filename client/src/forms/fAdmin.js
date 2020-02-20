@@ -1,119 +1,82 @@
-import { Form, Input, Icon, Button } from "antd";
-import React, { useState } from "react";
-import API from './../common/apimethods';
+import React from "react";
+import { Button } from 'antd';
+import _api from './../common/apimethods';
 
-function RegistrationForm({ form, type }) {
-    const [confirmDirty, setConfirmDirty] = useState(false);
-    const { getFieldDecorator } = form;
+const { useState } = React;
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        form.validateFieldsAndScroll(async (err, values) => {
-            if (!err) {
-                let { fullname, email, password } = values;
-                let result = await API.register({ fullname, email, password, _AUTH: localStorage.getItem('_kToken') });
-                console.log(result);
-                console.log("Received values of form: ", values);
-            }
-        });
+export default () => {
+    const [form, setForm] = useState({
+        name: "",
+        email: "",
+        password: ""
+    });
+
+    const validateForm = () => {
+        const { name, email , password } = form;
+        return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) 
+            && password.length > 4
+            && name.length > 4;
     };
 
-    const handleConfirmBlur = e => {
-        const { value } = e.target;
-        setConfirmDirty(confirmDirty || !!value);
-    };
-
-    const compareToFirstPassword = (rule, value, callback) => {
-        if (value && value !== form.getFieldValue("password")) {
-            callback("Two passwords that you enter is inconsistent!");
-        } else {
-            callback();
+    const handleRegister = async () => {
+        if (!validateForm()) return;
+        const _AUTH = localStorage.getItem("_kToken");
+        const register = await _api.register({...form, _AUTH });
+        if (register.status == 200) {
+            console.log(register);
         }
-    };
-
-    const validateToNextPassword = (rule, value, callback) => {
-        if (value && confirmDirty) {
-            form.validateFields(["confirm"], { force: true });
-        }
-        callback();
     };
 
     return (
-        <Form style={{ width: "50%", minWidth: "300px" }} onSubmit={handleSubmit}>
-            <Form.Item label="ime & priimek">
-                {getFieldDecorator("fullname", {
-                    rules: [
-                        {
-                            required: true,
-                            message: "Prosimo vnesite vaše ime & priimek!"
-                        }
-                    ]
-                })(
-                    <Input
-                        prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-                    />
-                )}
-            </Form.Item>
-            <Form.Item label="e-pošta">
-                {getFieldDecorator("email", {
-                    rules: [
-                        {
-                            type: "email",
-                            message: "Neveljavna e-pošta!"
-                        },
-                        {
-                            required: true,
-                            message: "Prosimo vnesite vašo e-pošto!"
-                        }
-                    ]
-                })(
-                    <Input
-                        prefix={<Icon type="mail" style={{ color: "rgba(0,0,0,.25)" }} />}
-                    />
-                )}
-            </Form.Item>
-            <Form.Item label="geslo" hasFeedback>
-                {getFieldDecorator("password", {
-                    rules: [
-                        {
-                            required: true,
-                            message: "Prosimo vnesite vaše geslo!"
-                        },
-                        {
-                            validator: validateToNextPassword
-                        }
-                    ]
-                })(
-                    <Input.Password
-                        prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-                    />
-                )}
-            </Form.Item>
-            <Form.Item label="potrdi geslo" hasFeedback>
-                {getFieldDecorator("confirm", {
-                    rules: [
-                        {
-                            required: true,
-                            message: "Prosimo ponovite geslo!"
-                        },
-                        {
-                            validator: compareToFirstPassword
-                        }
-                    ]
-                })(
-                    <Input.Password
-                        prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-                        onBlur={handleConfirmBlur}
-                    />
-                )}
-            </Form.Item>
-            <Form.Item>
-                <Button type="primary" shape="round" icon="user" htmlType="submit">
-                    {type == "edit" ? "Posodobi" : "Dodaj"}
-                </Button>
-            </Form.Item>
-        </Form>
+        <form>
+            <div className="form-group">
+                <label htmlFor="name" className="bmd-label-floating">Ime & Priimek</label>
+                <input 
+                    id="name"
+                    type="email" 
+                    className="form-control" 
+                    value={form.name} 
+                    minLength="5"
+                    onChange={event => {
+                        setForm({ name: event.target.value, email: form.email, password: form.password })
+                    }}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="email" className="bmd-label-floating">E-pošta</label>
+                <input 
+                    id="email"
+                    type="email" 
+                    className="form-control" 
+                    value={form.email} 
+                    minLength="5"
+                    onChange={event => {
+                        setForm({ name: form.name, email: event.target.value, password: form.password })
+                    }}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="password" className="bmd-label-floating">Geslo</label>
+                <input 
+                    id="password"
+                    type="password" 
+                    minLength="5"
+                    className="form-control" 
+                    value={form.password} 
+                    onChange={event => {
+                        setForm({ name: form.name, email: form.email, password: event.target.value })
+                    }}
+                />
+            </div>
+            <Button
+                type="primary"
+                icon="login"
+                shape="round"
+                className="login-form-button"
+                onClick={handleRegister}
+                disabled={!validateForm()}
+            >Registracija
+            </Button>
+        </form>
     );
-}
-
-export default Form.create({ name: "admin" })(RegistrationForm);
+};

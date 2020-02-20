@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 export default class {
-    static async register({ fullname, email, password, _AUTH }) {
+    static async register({ name, email, password, _AUTH }) {
         return new Promise(async (resolve, reject) => {
             await axios.post('/api/auth/user', {
                 params: {
-                    name: fullname,
+                    name: name,
                     email: email,
                     password: password
                 },
@@ -32,7 +32,7 @@ export default class {
 
     static async delUser(_id, _AUTH) {
         return new Promise(async (resolve, reject) => {
-            await axios.post(`/api/auth/delete-user/${_id}`, {
+            await axios.delete(`/api/auth/user/${_id}`, {
                 headers: {
                     'Authorization': `Token ${_AUTH}`,
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -46,7 +46,7 @@ export default class {
 
     static async getUser(_id, _AUTH) {
         return new Promise(async (resolve, reject) => {
-            await axios.get(`/api/auth/user-profile/${_id}`, {
+            await axios.get(`/api/auth/user/${_id}`, {
                 headers: {
                     'Authorization': `Token ${_AUTH}`,
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -59,7 +59,7 @@ export default class {
 
     static async getUsers(_AUTH) {
         return new Promise(async (resolve, reject) => {
-            await axios.get('/api/auth/users', {
+            await axios.get('/api/auth/user', {
                 headers: {
                     'Authorization': `Token ${_AUTH}`,
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -73,7 +73,7 @@ export default class {
 
     static async updateUser(_id, _params) {
         return new Promise(async (resolve, reject) => {
-            await axios.put(`/api/auth/update-user/${_id}`, _params)
+            await axios.put(`/api/auth/user/${_id}`, _params)
                 .then(resolve)
                 .catch(reject);
         });

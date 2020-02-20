@@ -16,7 +16,7 @@ export default function() {
           {...{ link: "/admins", title: "Administratorji", icon: "user" }}
         />
       </Menu.Item>
-      <Menu.Item key="/documentation">
+      {/*<Menu.Item key="/documentation">
         <KoisLink
           {...{
             link: "/documentation",
@@ -24,10 +24,10 @@ export default function() {
             icon: "file-search"
           }}
         />
-      </Menu.Item>
-      <Menu.Item key="/tasks">
+        </Menu.Item>*/}
+      {/*<Menu.Item key="/tasks">
         <KoisLink {...{ link: "/tasks", title: "Zahtevki", icon: "pushpin" }} />
-      </Menu.Item>
+      </Menu.Item>*/}
       <Menu.Item key="/login">
         <KoisLink {...{ link: "/login", title: "Odjava", icon: "logout" }} />
       </Menu.Item>

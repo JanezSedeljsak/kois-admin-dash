@@ -2,13 +2,16 @@ import React from "react";
 import { Button } from 'antd';
 import _api from './../common/apimethods';
 
-const { useState } = React;
+const { useEffect, useState } = React;
 
 export default () => {
     const [form, setForm] = useState({
         email: "",
         password: ""
     });
+
+    const useMountEffect = (fun) => useEffect(fun, []);
+    useMountEffect(() => localStorage.removeItem('_kToken'));
 
     const validateForm = () => {
         const { email , password } = form;
@@ -26,8 +29,9 @@ export default () => {
     return (
         <form>
             <div className="form-group">
-                <label className="bmd-label-floating">E-pošta</label>
+                <label htmlFor="email" className="bmd-label-floating">E-pošta</label>
                 <input 
+                    id="email"
                     type="email" 
                     className="form-control" 
                     value={form.email} 
@@ -38,8 +42,9 @@ export default () => {
                 />
             </div>
             <div className="form-group">
-                <label className="bmd-label-floating">Geslo</label>
+                <label htmlFor="password" className="bmd-label-floating">Geslo</label>
                 <input 
+                    id="password"
                     type="password" 
                     minLength="5"
                     className="form-control" 

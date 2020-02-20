@@ -29,8 +29,8 @@ export default function() {
     // common routes
     { path: "/points", component: <Points />, authRequired: true },
     { path: "/admins", component: <Admins />, authRequired: true },
-    { path: "/documentation", component: <Documentation />, authRequired: false },
-    { path: "/tasks", component: <Tasks />, authRequired: true },
+    // { path: "/documentation", component: <Documentation />, authRequired: false },
+    // { path: "/tasks", component: <Tasks />, authRequired: true },
 
     // form routes
     { path: "/new/point", component: <FPoint {...{ type: "new" }} />, authRequired: true },
@@ -38,7 +38,7 @@ export default function() {
     { path: "/new/task", component: <FTask {...{ type: "new" }} />, authRequired: true },
     { path: "/edit/point/:id", component: <FPoint {...{ type: "edit" }} />, authRequired: true },
     { path: "/edit/admin/:id", component: <FAdmin {...{ type: "edit" }} />, authRequired: true },
-    { path: "/edit/task/:id", component: <FTask {...{ type: "edit" }} />, authRequired: true },
+    // { path: "/edit/task/:id", component: <FTask {...{ type: "edit" }} />, authRequired: true },
 
     // detailed view routes
     { path: "/details/point/:id", component: <DPoint />, authRequired: true }

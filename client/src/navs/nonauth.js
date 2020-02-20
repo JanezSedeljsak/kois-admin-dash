@@ -11,7 +11,7 @@ export default function() {
           {...{ link: "/points", title: "Točke", icon: "environment" }}
         />
       </Menu.Item>
-      <Menu.Item key="/documentation">
+    {/*<Menu.Item key="/documentation">
         <KoisLink
           {...{
             link: "/documentation",
@@ -19,7 +19,7 @@ export default function() {
             icon: "file-search"
           }}
         />
-      </Menu.Item>
+      </Menu.Item>*/}
       <Menu.Item key="/login">
         <KoisLink {...{ link: "/login", title: "Prijava", icon: "login" }} />
       </Menu.Item>
