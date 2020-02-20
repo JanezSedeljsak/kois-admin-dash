@@ -1,11 +1,11 @@
 import { Route, Redirect } from "react-router-dom";
 import React from "react";
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const KoisRoute = ({ component: Component, publicRoute, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      localStorage.getItem("_kToken") ? (
+      localStorage.getItem("_kToken") || publicRoute ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -19,4 +19,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
-export default PrivateRoute;
+export default KoisRoute;

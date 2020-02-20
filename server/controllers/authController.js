@@ -7,13 +7,10 @@ exports.loginUser = (req, res, next) => {
     userSchema.findOne({
         email: req.body.email
     }).then(user => {
-        if (!user) {
-            return res.status(401).json({
-                message: "Authentication failed"
-            });
+        if (user) {
+            getUser = user;
+            return bcrypt.compare(req.body.password, user.password);
         }
-        getUser = user;
-        return bcrypt.compare(req.body.password, user.password);
     }).then(response => {
         if (!response) {
             return res.status(401).json({

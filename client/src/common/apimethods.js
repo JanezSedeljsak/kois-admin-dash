@@ -3,7 +3,7 @@ import axios from 'axios';
 export default class {
     static async register({ fullname, email, password, _AUTH }) {
         return new Promise(async (resolve, reject) => {
-            await axios.post('/api/auth/register', {
+            await axios.post('/api/auth/user', {
                 params: {
                     name: fullname,
                     email: email,
@@ -20,7 +20,6 @@ export default class {
     }
 
     static async login({ email, password }) {
-        console.log("23", email, password);
         return new Promise(async (resolve, reject) => {
             await axios.post(`/api/auth/login`, {
                 email: email,
