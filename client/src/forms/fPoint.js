@@ -3,6 +3,7 @@ import { Form, Icon, Input, Button, Checkbox, Modal, List, Avatar } from "antd";
 import LocationPicker from "react-location-picker";
 import KoisModal from './../common/modal';
 import Swal from 'sweetalert2';
+import _api from './../common/apimethods';
 
 export default function ({ type }) {
     const [modal, setModalVisibility] = useState(false);
@@ -93,8 +94,20 @@ export default function ({ type }) {
         />);
     }
 
-    const primarySubmit = () => {
-        console.log(tabs, position);
+    const primarySubmit = async () => {
+        const _AUTH = localStorage.getItem('_kToken');
+        const data = {
+            location: { ...position, lon: position.lng },
+            tabs: tabs
+        };
+        const response = await _api.createPoint({ data, _AUTH})
+        if (response.status == 200) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Točka je bila uspešno dodana!'
+            });
+            setTabs([]);
+        }
     }
 
     const getModalContent = () => {

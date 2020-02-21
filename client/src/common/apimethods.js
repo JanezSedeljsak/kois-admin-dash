@@ -33,33 +33,6 @@ export default class {
         });
     }
 
-    static async delUser(_id, _AUTH) {
-        return new Promise(async (resolve, reject) => {
-            await axios.delete(`${_API_}/api/auth/user/${_id}`, {
-                headers: {
-                    'Authorization': `Token ${_AUTH}`,
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
-                .then(resolve)
-                .catch(reject);
-        });
-
-    }
-
-    static async getUser(_id, _AUTH) {
-        return new Promise(async (resolve, reject) => {
-            await axios.get(`${_API_}/api/auth/user/${_id}`, {
-                headers: {
-                    'Authorization': `Token ${_AUTH}`,
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
-                .then(resolve)
-                .catch(reject);
-        });
-    }
-
     static async getUsers(_AUTH) {
         return new Promise(async (resolve, reject) => {
             await axios.get(`${_API_}/api/auth/user`, {
@@ -80,5 +53,37 @@ export default class {
                 .then(resolve)
                 .catch(reject);
         });
+    }
+
+
+    static async createPoint({ data, _AUTH }) {
+        return new Promise(async (resolve, reject) => {
+            await axios.post(`${_API_}/api/common/point`, {
+                params: {
+                    point: data
+                },
+                headers: {
+                    'Authorization': `Token ${_AUTH}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            })
+                .then(resolve)
+                .catch(reject);
+        });
+    }
+
+
+    static async getPoints(_AUTH) {
+        return new Promise(async (resolve, reject) => {
+            await axios.get(`${_API_}/api/common/point`, {
+                headers: {
+                    'Authorization': `Token ${_AUTH}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(resolve)
+                .catch(reject);
+        });
+
     }
 }

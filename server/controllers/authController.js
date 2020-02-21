@@ -36,7 +36,6 @@ exports.loginUser = (req, res, next) => {
 }
 
 exports.createUser = (req, res, next) => {
-    console.log(req.body.params);
     const { name, email, password } = req.body.params;
     bcrypt.hash(password, 10).then((hash) => {
         const user = new userSchema({

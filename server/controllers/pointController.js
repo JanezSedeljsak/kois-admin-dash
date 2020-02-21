@@ -10,7 +10,8 @@ exports.getAllLocations = (req, res) => {
 }
 
 exports.newPoint = (req, res) => {
-    const newPoint = new Point(req.body);
+    console.log(req.body.params);
+    const newPoint = new Point(req.body.params.point);
     newPoint.save((err, point) => {
         (err) ? res.send(err) : res.json(point);
     });
