@@ -5,8 +5,8 @@ const authController = require('./../controllers/authController');
 
 
 router.route('/user')
-    .post(authController.createUser)
-    .get(authController.getAllUsers);
+    .post(authorize, authController.createUser)
+    .get(authorize, authController.getAllUsers);
 
 router.route('/user/:id')
     .get(authorize, authController.getUser)

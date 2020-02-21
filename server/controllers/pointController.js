@@ -6,7 +6,7 @@ exports.getAllPoints = (req, res) => {
 };
 
 exports.getAllLocations = (req, res) => {
-    Point.find({}, (err, point) =>  (err) ? res.send(err) : res.json(point));
+    Point.find({}, { location: 1 }, (err, point) =>  (err) ? res.send(err) : res.json(point));
 }
 
 exports.newPoint = (req, res) => {
