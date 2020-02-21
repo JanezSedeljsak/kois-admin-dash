@@ -29,7 +29,7 @@ export default () => {
     return (
         <form>
             <div className="form-group">
-                <label htmlFor="email" className="bmd-label-floating">E-pošta</label>
+                <label for="email" className="bmd-label-floating">E-pošta</label>
                 <input 
                     id="email"
                     type="email" 
@@ -42,7 +42,7 @@ export default () => {
                 />
             </div>
             <div className="form-group">
-                <label htmlFor="password" className="bmd-label-floating">Geslo</label>
+                <label for="password" className="bmd-label-floating">Geslo</label>
                 <input 
                     id="password"
                     type="password" 

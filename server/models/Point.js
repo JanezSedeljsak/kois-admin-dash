@@ -21,3 +21,5 @@ let pointSchema = new Schema({
 })
 
 module.exports = mongoose.model('Point', pointSchema)
+
+/* kKkimages123 */

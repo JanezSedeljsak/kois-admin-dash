@@ -12,7 +12,7 @@ export default () => {
     });
 
     const validateForm = () => {
-        const { name, email , password } = form;
+        const { name, email, password } = form;
         return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) 
             && password.length > 4
             && name.length > 4;
@@ -30,7 +30,7 @@ export default () => {
     return (
         <form>
             <div className="form-group">
-                <label htmlFor="name" className="bmd-label-floating">Ime & Priimek</label>
+                <label for="name" className="bmd-label-floating">Ime & Priimek</label>
                 <input 
                     id="name"
                     type="email" 
@@ -38,12 +38,12 @@ export default () => {
                     value={form.name} 
                     minLength="5"
                     onChange={event => {
-                        setForm({ name: event.target.value, email: form.email, password: form.password })
+                        setForm({ ...form, name: event.target.value  })
                     }}
                 />
             </div>
             <div className="form-group">
-                <label htmlFor="email" className="bmd-label-floating">E-pošta</label>
+                <label for="email" className="bmd-label-floating">E-pošta</label>
                 <input 
                     id="email"
                     type="email" 
@@ -51,12 +51,12 @@ export default () => {
                     value={form.email} 
                     minLength="5"
                     onChange={event => {
-                        setForm({ name: form.name, email: event.target.value, password: form.password })
+                        setForm({ ...form, email: event.target.value })
                     }}
                 />
             </div>
             <div className="form-group">
-                <label htmlFor="password" className="bmd-label-floating">Geslo</label>
+                <label for="password" className="bmd-label-floating">Geslo</label>
                 <input 
                     id="password"
                     type="password" 
@@ -64,7 +64,7 @@ export default () => {
                     className="form-control" 
                     value={form.password} 
                     onChange={event => {
-                        setForm({ name: form.name, email: form.email, password: event.target.value })
+                        setForm({ ...form, password: event.target.value })
                     }}
                 />
             </div>
