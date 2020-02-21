@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import "./index.css";
 import { Layout, Menu, Breadcrumb, Icon, Typography } from "antd";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router";
+import { createBrowserHistory } from "history";
+import KoisHistory from './history';
 
 import KoisRouter from "./common/router";
 import KoisLogos from "./common/logos";
@@ -19,8 +22,9 @@ export default function() {
   const [isAuth, setAuth] = useState(localStorage.getItem("_kToken") || undefined);
 
   return (
+    <Router history={KoisHistory}>
     <Layout style={{ minHeight: "100vh" }}>
-      <Router>
+      <BrowserRouter>
         <Sider
           style={{ background: "#345" }}
           width={"300"}
@@ -57,7 +61,8 @@ export default function() {
             Samo Pritrznik & Janez Sedeljsak 2019/20 ©
           </Footer>
         </Layout>
-      </Router>
+      </BrowserRouter>
     </Layout>
+    </Router>
   );
 }

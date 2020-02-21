@@ -1,11 +1,14 @@
 import axios from 'axios';
 
+// if development mode use another separate server for api
+const _API_ = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'localhost:5000' : '';
+
 export default class {
-    static async register({ fullname, email, password, _AUTH }) {
+    static async register({ name, email, password, _AUTH }) {
         return new Promise(async (resolve, reject) => {
-            await axios.post('/api/auth/register', {
+            await axios.post(`${_API_}/api/auth/user`, {
                 params: {
-                    name: fullname,
+                    name: name,
                     email: email,
                     password: password
                 },
@@ -20,9 +23,8 @@ export default class {
     }
 
     static async login({ email, password }) {
-        console.log("23", email, password);
         return new Promise(async (resolve, reject) => {
-            await axios.post(`/api/auth/login`, {
+            await axios.post(`${_API_}/api/auth/login`, {
                 email: email,
                 password: password
             })
@@ -31,36 +33,9 @@ export default class {
         });
     }
 
-    static async delUser(_id, _AUTH) {
-        return new Promise(async (resolve, reject) => {
-            await axios.post(`/api/auth/delete-user/${_id}`, {
-                headers: {
-                    'Authorization': `Token ${_AUTH}`,
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
-                .then(resolve)
-                .catch(reject);
-        });
-
-    }
-
-    static async getUser(_id, _AUTH) {
-        return new Promise(async (resolve, reject) => {
-            await axios.get(`/api/auth/user-profile/${_id}`, {
-                headers: {
-                    'Authorization': `Token ${_AUTH}`,
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
-                .then(resolve)
-                .catch(reject);
-        });
-    }
-
     static async getUsers(_AUTH) {
         return new Promise(async (resolve, reject) => {
-            await axios.get('/api/auth/users', {
+            await axios.get(`${_API_}/api/auth/user`, {
                 headers: {
                     'Authorization': `Token ${_AUTH}`,
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -74,9 +49,41 @@ export default class {
 
     static async updateUser(_id, _params) {
         return new Promise(async (resolve, reject) => {
-            await axios.put(`/api/auth/update-user/${_id}`, _params)
+            await axios.put(`${_API_}/api/auth/user/${_id}`, _params)
                 .then(resolve)
                 .catch(reject);
         });
+    }
+
+
+    static async createPoint({ data, _AUTH }) {
+        return new Promise(async (resolve, reject) => {
+            await axios.post(`${_API_}/api/common/point`, {
+                params: {
+                    point: data
+                },
+                headers: {
+                    'Authorization': `Token ${_AUTH}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            })
+                .then(resolve)
+                .catch(reject);
+        });
+    }
+
+
+    static async getPoints(_AUTH) {
+        return new Promise(async (resolve, reject) => {
+            await axios.get(`${_API_}/api/common/point`, {
+                headers: {
+                    'Authorization': `Token ${_AUTH}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(resolve)
+                .catch(reject);
+        });
+
     }
 }

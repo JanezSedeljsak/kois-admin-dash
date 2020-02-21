@@ -1,43 +1,86 @@
-import React from 'react';
-const { createContext, useContext, useState } = React;
+import React from "react";
+import { Button } from 'antd';
+import _api from './../common/apimethods';
+import Swal from 'sweetalert2';
+import { useHistory } from "react-router-dom";
 
-const ThemeContext = createContext(null);
+const { useEffect, useState } = React;
 
-function Content() {
-  const { style, visible, toggleStyle, toggleVisible } = useContext(
-    ThemeContext
-  );
+export default (props) => {
+    const history = useHistory();
 
-  return (
-    <div>
-      <p>
-        The theme is <em>{style}</em> and state of visibility is
-        <em> {visible.toString()}</em>
-      </p>
-      <button onClick={toggleStyle}>Change Theme</button>
-      <button onClick={toggleVisible}>Change Visibility</button>
-    </div>
-  );
-}
+    const [form, setForm] = useState({
+        email: "",
+        password: ""
+    });
 
-function App() {
-  const [style, setStyle] = useState("light");
-  const [visible, setVisible] = useState(true);
+    const useMountEffect = (fun) => useEffect(fun, []);
+    useMountEffect(() => {
+        localStorage.removeItem('_kToken');
+    });
 
-  function toggleStyle() {
-    setStyle(style => (style === "light" ? "dark" : "light"));
-  }
-  function toggleVisible() {
-    setVisible(visible => !visible);
-  }
+    const validateForm = () => {
+        const { email , password } = form;
+        return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) && password.length > 4;
+    };
 
-  return (
-    <ThemeContext.Provider
-      value={{ style, visible, toggleStyle, toggleVisible }}
-    >
-      <Content />
-    </ThemeContext.Provider>
-  );
-}
+    const handleLogin = async () => {
+        if (!validateForm()) return;
+        const login = await _api.login(form);
+        if (login.status == 200) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Prijava je bila uspešna!'
+            }).then(() => {
+                history.push("/");
+                window.location.reload();
+            });
+            localStorage.setItem('_kToken', login.data.token);
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Prijava ni bila uspešna!'
+            })
+        }
+    };
 
-export default App;
+    return (
+        <form>
+            <div className="form-group">
+                <label for="email" className="bmd-label-floating">E-pošta</label>
+                <input 
+                    id="email"
+                    type="email" 
+                    className="form-control" 
+                    value={form.email} 
+                    minLength="5"
+                    onChange={event => {
+                        setForm({ email: event.target.value, password: form.password })
+                    }}
+                />
+            </div>
+            <div className="form-group">
+                <label for="password" className="bmd-label-floating">Geslo</label>
+                <input 
+                    id="password"
+                    type="password" 
+                    minLength="5"
+                    className="form-control" 
+                    value={form.password} 
+                    onChange={event => {
+                        setForm({ email: form.email, password: event.target.value })
+                    }}
+                />
+            </div>
+            <Button
+                type="primary"
+                icon="login"
+                shape="round"
+                className="login-form-button"
+                onClick={handleLogin}
+                disabled={!validateForm()}
+            >Prijava
+            </Button>
+        </form>
+    );
+};

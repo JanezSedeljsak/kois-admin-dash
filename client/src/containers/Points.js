@@ -1,10 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import { Card, Button, Tooltip } from "antd";
 import KoisLink from "./../common/buttonlink";
+import _api from "./../common/apimethods";
 
 const { Meta } = Card;
 
 export default function() {
+  const [points, setPoints] = useState([]);
+
+  useEffect(() => {
+    getPoints();
+  }, []);
+
+  async function getPoints() {
+    const token = localStorage.getItem("_kToken");
+    const response = await _api.getPoints(token);
+    if (response.status == 200) {
+      setPoints(response.data);
+      console.log(response.data);
+    }
+  }
+
   return (
     <>
       <KoisLink
@@ -18,19 +34,19 @@ export default function() {
           position: "relative"
         }}
       >
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
+        {points.map(({ tabs, _id }, index) => (
           <Card
             key={index}
             hoverable
             style={{
               flex: "0 1 calc(25% - 16px)",
-              margin: "8px",
+              margin: "8px"
             }}
             cover={
-              <img src="https://geospatialmedia.s3.amazonaws.com/wp-content/uploads/2018/11/location-tech.jpg" />
+              <img src={tabs[0].images[0]} />
             }
           >
-            <Meta title="Random location" />
+            <Meta title={tabs[0].title} />
             <hr />
             <Tooltip title="Podroben ogled">
               <Button
@@ -39,7 +55,7 @@ export default function() {
                 shape="circle"
                 icon="fullscreen"
                 size={"large"}
-                href={`/details/point/${index}`}
+                href={`/details/point/${_id}`}
               />
             </Tooltip>
             <Tooltip title="Uredi">
@@ -49,7 +65,7 @@ export default function() {
                 shape="circle"
                 icon="edit"
                 size={"large"}
-                href={`/edit/point/${index}`}
+                href={`/edit/point/${_id}`}
               />
             </Tooltip>
           </Card>

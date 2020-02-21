@@ -8,8 +8,8 @@ let pointSchema = new Schema({
         lon: { type: Number }
     },
     tabs: [{ 
-        header: { type: String },
-        imgs: [{ type: String }],
+        title: { type: String },
+        images: [{ type: String }],
         description: { type: String }
     }],
     userCreated: Schema.Types.ObjectId,
@@ -21,3 +21,5 @@ let pointSchema = new Schema({
 })
 
 module.exports = mongoose.model('Point', pointSchema)
+
+/* kKkimages123 */
