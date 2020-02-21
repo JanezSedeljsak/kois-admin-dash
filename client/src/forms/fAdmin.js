@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from 'antd';
 import _api from './../common/apimethods';
+import Swal from 'sweetalert2';
 
 const { useState } = React;
 
@@ -23,7 +24,10 @@ export default () => {
         const _AUTH = localStorage.getItem("_kToken");
         const register = await _api.register({...form, _AUTH });
         if (register.status == 200) {
-            console.log(register);
+            Swal.fire({
+                icon: 'success',
+                title: 'Uporabnik je bil uspešno dodan!'
+            });
         }
     };
 
@@ -33,7 +37,7 @@ export default () => {
                 <label for="name" className="bmd-label-floating">Ime & Priimek</label>
                 <input 
                     id="name"
-                    type="email" 
+                    type="text" 
                     className="form-control" 
                     value={form.name} 
                     minLength="5"

@@ -2,17 +2,22 @@ import React from "react";
 import { Button } from 'antd';
 import _api from './../common/apimethods';
 import Swal from 'sweetalert2';
+import { useHistory } from "react-router-dom";
 
 const { useEffect, useState } = React;
 
-export default () => {
+export default (props) => {
+    const history = useHistory();
+
     const [form, setForm] = useState({
         email: "",
         password: ""
     });
 
     const useMountEffect = (fun) => useEffect(fun, []);
-    useMountEffect(() => localStorage.removeItem('_kToken'));
+    useMountEffect(() => {
+        localStorage.removeItem('_kToken');
+    });
 
     const validateForm = () => {
         const { email , password } = form;
@@ -27,7 +32,8 @@ export default () => {
                 icon: 'success',
                 title: 'Prijava je bila uspešna!'
             }).then(() => {
-                debugger;
+                history.push("/");
+                window.location.reload();
             });
             localStorage.setItem('_kToken', login.data.token);
         } else {

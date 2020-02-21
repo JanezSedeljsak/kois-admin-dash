@@ -36,14 +36,16 @@ exports.loginUser = (req, res, next) => {
 }
 
 exports.createUser = (req, res, next) => {
-    bcrypt.hash(req.body.password, 10).then((hash) => {
+    console.log(req.body.params);
+    const { name, email, password } = req.body.params;
+    bcrypt.hash(password, 10).then((hash) => {
         const user = new userSchema({
-            name: req.body.name,
-            email: req.body.email,
+            name,
+            email,
             password: hash
         });
         user.save().then((response) => {
-            res.status(201).json({
+            res.status(200).json({
                 message: "User successfully created!",
                 result: response
             });

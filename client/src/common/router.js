@@ -42,8 +42,8 @@ export default function () {
 
     return (
         <Switch>
-            {_R.map(({ path, component, authRequired }) => (
-                <Route path={path} isPrivate={authRequired || false} >{component}</Route>
+            {_R.map(({ path, component, authRequired }, index) => (
+                <Route key={index} path={path} isPrivate={authRequired || false} >{component}</Route>
             ))}
         </Switch>
     );
