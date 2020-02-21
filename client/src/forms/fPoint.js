@@ -29,7 +29,7 @@ export default function ({ type }) {
             if(filteredImages.length !== images.length)  {
                 Swal.fire({
                     title: 'Napaka!',
-                    text: 'Povezava do slik niso bile veljavne!',
+                    text: 'Najdena je bila neveljavna povezava do slike!',
                     icon: 'error',
                     confirmButtonText: 'Nadaljuj'
                 });

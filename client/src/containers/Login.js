@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from 'antd';
 import _api from './../common/apimethods';
+import Swal from 'sweetalert2';
 
 const { useEffect, useState } = React;
 
@@ -22,7 +23,18 @@ export default () => {
         if (!validateForm()) return;
         const login = await _api.login(form);
         if (login.status == 200) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Prijava je bila uspešna!'
+            }).then(() => {
+                debugger;
+            });
             localStorage.setItem('_kToken', login.data.token);
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Prijava ni bila uspešna!'
+            })
         }
     };
 

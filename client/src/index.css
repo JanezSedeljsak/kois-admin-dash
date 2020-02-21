@@ -39,3 +39,8 @@ form label {
 .ant-modal-close, .ant-modal-title {
   color: #ccc !important;
 }
+
+.ant-avatar-image {
+    width: 40px;
+    height: 40px;
+}
