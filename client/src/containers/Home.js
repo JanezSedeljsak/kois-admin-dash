@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 export default function() {
 
   return (
-    <div>
-        serbus
-    </div>
+    <h1>
+        Welcome to Kois
+    </h1>
   );
 }

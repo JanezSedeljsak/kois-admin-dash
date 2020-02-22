@@ -18,7 +18,6 @@ export default function() {
     const response = await _api.getPoints(token);
     if (response.status == 200) {
       setPoints(response.data);
-      console.log(response.data);
     }
   }
 

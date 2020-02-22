@@ -3,6 +3,7 @@ import { List, Avatar, Button } from "antd";
 import KoisLink from './../common/buttonlink';
 import { Link, Switch, Route } from "react-router-dom";
 import _api from './../common/apimethods';
+import UserIcon from './../images/user.png';
 
 export default function () {
     const [admins, setAdmins] = useState([]);
@@ -31,7 +32,7 @@ export default function () {
                     <List.Item>
                         <List.Item.Meta
                             avatar={
-                                <Avatar src="https://lh3.googleusercontent.com/proxy/Y1shLbYDADF-w5XLx4JUqfs-kOPuRgtP3nLwpYM0wP8NUQttSWMabqiRniN_0FTFeMu69iJbmlI4w54pRBmg6Z8mg4xEw0MB-bbJOBn-aiEUl4XAtKEh5DRPx20f" />
+                                <Avatar src={UserIcon} />
                             }
                             title={item.name}
                             description={item.email}

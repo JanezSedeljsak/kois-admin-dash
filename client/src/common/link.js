@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Icon } from "antd";
+import { Icon, Button } from "antd";
 import React from 'react';
 
 // ONLY USED IN app.js !!!!!
@@ -7,10 +7,9 @@ import React from 'react';
 
 export default function({ title, link, icon }) {
     return (
-        <>
-            <Link to={link} />
+        <span id={link} >
             <Icon type={icon} />
             <span>{title}</span>
-        </>
+        </span>
     )
 }

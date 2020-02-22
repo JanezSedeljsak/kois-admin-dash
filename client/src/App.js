@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import "./index.css";
 import { Layout, Menu, Breadcrumb, Icon, Typography } from "antd";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useHistory } from "react-router-dom";
 import { Router } from "react-router";
 import { createBrowserHistory } from "history";
 import KoisHistory from './history';
@@ -20,6 +20,18 @@ const { Title } = Typography;
 export default function() {
   const [collapsed, setCollapsed] = useState(false);
   const [isAuth, setAuth] = useState(localStorage.getItem("_kToken") || undefined);
+
+  useEffect(() => {
+    document.querySelectorAll('.ant-menu-item').forEach(item => {
+        item.addEventListener('click', async event => {
+            if (item.firstChild.id == '/login') {
+                await localStorage.removeItem('_kToken');
+                await setAuth(undefined);
+            }
+            window.location = (item.firstChild.id);
+        });
+    });
+  }, []);
 
   return (
     <Router history={KoisHistory}>

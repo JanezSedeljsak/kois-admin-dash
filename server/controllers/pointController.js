@@ -10,7 +10,6 @@ exports.getAllLocations = (req, res) => {
 }
 
 exports.newPoint = (req, res) => {
-    console.log(req.body.params);
     const newPoint = new Point(req.body.params.point);
     newPoint.save((err, point) => {
         (err) ? res.send(err) : res.json(point);
@@ -24,7 +23,6 @@ exports.getPoint = (req, res) => {
 };
 
 exports.updatePoint = (req, res) => {
-    console.log(req.body);
     const data = req.body.params.point;
     Point.findOneAndUpdate({ _id: req.params.id }, { ...data, updatedAt: new Date() }, { new: true }, (err, point) => {
         (err) ? res.send(err) : res.json(point);

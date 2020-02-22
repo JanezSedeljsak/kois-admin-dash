@@ -43,4 +43,5 @@ form label {
 
 .ant-card-cover img {
     height: 250px !important;
+    object-fit: cover !important;
 }
