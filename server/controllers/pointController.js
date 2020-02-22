@@ -24,7 +24,9 @@ exports.getPoint = (req, res) => {
 };
 
 exports.updatePoint = (req, res) => {
-    Point.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, point) => {
+    console.log(req.body);
+    const data = req.body.params.point;
+    Point.findOneAndUpdate({ _id: req.params.id }, { ...data, updatedAt: new Date() }, { new: true }, (err, point) => {
         (err) ? res.send(err) : res.json(point);
     });
 };

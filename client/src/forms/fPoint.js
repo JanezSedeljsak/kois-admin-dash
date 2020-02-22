@@ -16,9 +16,25 @@ export default function ({ type }) {
         description: ''
     });
 
+
+
     const handleLocationChange = ({ position, address, places }) => {
         setPosition(position);
     };
+
+    const getPoint = async () => {
+        const _AUTH = localStorage.getItem('_kToken');
+        const url = window.location.href;
+        const id = url.substr(url.lastIndexOf('/') + 1);
+        const response = await _api.getPoint({ id, _AUTH });
+        if (response.status == 200) {
+            const responseLocation = response.data.location;
+            setTabs(response.data.tabs);
+            setPosition({ lat: responseLocation.lat, lng: responseLocation.lon })
+        }
+    }
+
+    useEffect(() => (type == 'edit') ? getPoint() : null, []);
 
     const toggleModal = () => setModalVisibility(!modal);
 
@@ -94,7 +110,24 @@ export default function ({ type }) {
         />);
     }
 
-    const primarySubmit = async () => {
+    const editPrimarySubmit = async () => {
+        const _AUTH = localStorage.getItem('_kToken');
+        const url = window.location.href;
+        const id = url.substr(url.lastIndexOf('/') + 1);
+        const data = {
+            location: { ...position, lon: position.lng },
+            tabs: tabs
+        };
+        const response = await _api.updatePoint({ id, data, _AUTH })
+        if (response.status == 200) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Točka je bila uspešno posodobljena!'
+            });
+        }
+    }
+
+    const addPrimarySubmit = async () => {
         const _AUTH = localStorage.getItem('_kToken');
         const data = {
             location: { ...position, lon: position.lng },
@@ -179,7 +212,7 @@ export default function ({ type }) {
             </Form.Item>
             <Form.Item>
                 <Button
-                    onClick={primarySubmit}
+                    onClick={type == "edit" ? editPrimarySubmit : addPrimarySubmit}
                     type="primary"
                     icon="environment"
                     shape="round"

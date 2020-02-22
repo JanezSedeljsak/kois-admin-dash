@@ -78,6 +78,37 @@ export default class {
 
     }
 
+
+    static async getPoint({ id, _AUTH }) {
+        return new Promise(async (resolve, reject) => {
+            await axios.get(`${_API_}/api/common/point/${id}`, {
+                headers: {
+                    'Authorization': `Token ${_AUTH}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(resolve)
+                .catch(resolve);
+        });
+    }
+
+
+    static async updatePoint({ id, data, _AUTH }) {
+        return new Promise(async (resolve, reject) => {
+            await axios.post(`${_API_}/api/common/point/${id}`, {
+                params: { 
+                    point: data 
+                },
+                headers: {
+                    'Authorization': `Token ${_AUTH}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(resolve)
+                .catch(resolve);
+        });
+    }
+
     
     static async deletePoint({ id, _AUTH }) {
         return new Promise(async (resolve, reject) => {
