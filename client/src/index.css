@@ -28,10 +28,6 @@ form label {
     line-height: 25px !important;
 }
 
-.ant-card-bordered {
-    border: none !important;
-}
-
 .ant-modal-header {
   background-color: #166488 !important;
 }
@@ -43,4 +39,8 @@ form label {
 .ant-avatar-image {
     width: 40px;
     height: 40px;
+}
+
+.ant-card-cover img {
+    height: 250px !important;
 }

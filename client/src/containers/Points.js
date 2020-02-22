@@ -2,6 +2,7 @@ import React, { useState, useEffect  } from "react";
 import { Card, Button, Tooltip } from "antd";
 import KoisLink from "./../common/buttonlink";
 import _api from "./../common/apimethods";
+import Swal from 'sweetalert2';
 
 const { Meta } = Card;
 
@@ -19,6 +20,31 @@ export default function() {
       setPoints(response.data);
       console.log(response.data);
     }
+  }
+
+  async function deletePoint(id) {
+    const _AUTH = localStorage.getItem("_kToken");
+    Swal.fire({
+        title: 'Ali ste prepričani?',
+        text: "Točko boste popolnoma odstranili iz kois sistema!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Da odstrani jo!'
+      }).then(async (result) => {
+        if (result.value) {
+            const response = await _api.deletePoint({ id, _AUTH });
+            if (response.status == 200) {
+                Swal.fire(
+                    'Uspešno odstranjeno!',
+                    'Točka je bila odstranjena.',
+                    'success'
+                );
+                getPoints();
+            } 
+        }
+    });
   }
 
   return (
@@ -60,12 +86,22 @@ export default function() {
             </Tooltip>
             <Tooltip title="Uredi">
               <Button
-                style={{ float: "right" }}
+                style={{ float: "right", marginLeft: "10px" }}
                 type="primary"
                 shape="circle"
                 icon="edit"
                 size={"large"}
                 href={`/edit/point/${_id}`}
+              />
+            </Tooltip>
+            <Tooltip title="Odstrani točko">
+              <Button
+                style={{ float: "right" }}
+                type="danger"
+                shape="circle"
+                icon="delete"
+                size={"large"}
+                onClick={() => deletePoint(_id)}
               />
             </Tooltip>
           </Card>

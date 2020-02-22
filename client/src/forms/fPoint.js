@@ -170,7 +170,7 @@ export default function ({ type }) {
                                     <Avatar src={item.images[0]} />
                                 }
                                 title={item.title}
-                                description={item.description}
+                                description={(item.description.length > 100 ? item.description.substr(0,100) : item.description) + "..."}
                             />
                         </List.Item>
                     )}

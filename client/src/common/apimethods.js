@@ -18,7 +18,7 @@ export default class {
                 },
             })
                 .then(resolve)
-                .catch(reject);
+                .catch(resolve);
         });
     }
 
@@ -29,7 +29,7 @@ export default class {
                 password: password
             })
                 .then(resolve)
-                .catch(reject);
+                .catch(resolve);
         });
     }
 
@@ -42,16 +42,7 @@ export default class {
                 }
             })
                 .then(resolve)
-                .catch(reject);
-        });
-
-    }
-
-    static async updateUser(_id, _params) {
-        return new Promise(async (resolve, reject) => {
-            await axios.put(`${_API_}/api/auth/user/${_id}`, _params)
-                .then(resolve)
-                .catch(reject);
+                .catch(resolve);
         });
     }
 
@@ -68,7 +59,7 @@ export default class {
                 },
             })
                 .then(resolve)
-                .catch(reject);
+                .catch(resolve);
         });
     }
 
@@ -82,8 +73,22 @@ export default class {
                 }
             })
                 .then(resolve)
-                .catch(reject);
+                .catch(resolve);
         });
 
+    }
+
+    
+    static async deletePoint({ id, _AUTH }) {
+        return new Promise(async (resolve, reject) => {
+            await axios.delete(`${_API_}/api/common/point/${id}`, {
+                headers: {
+                    'Authorization': `Token ${_AUTH}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(resolve)
+                .catch(resolve);
+        });
     }
 }
