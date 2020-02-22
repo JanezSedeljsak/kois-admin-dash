@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Icon, Input, Button, Checkbox, Modal, List, Avatar, Tooltip } from "antd";
+import { Form, Icon, Input, Button, Checkbox, Modal, List, Avatar, Tooltip, Spin } from "antd";
 import LocationPicker from "react-location-picker";
 import KoisModal from './../common/modal';
 import Swal from 'sweetalert2';
@@ -193,82 +193,86 @@ export default function ({ type }) {
         });
     }
 
-    return !modal ? (
-        <Form style={{ minWidth: "50%" }}>
-            <Form.Item>
-                <Button
-                    onClick={() => { toggleModal(true); setModalIndex('locationPicker'); }}
-                    icon="select"
-                    shape="round"
-                    htmlType="button"
-                    className="login-form-button"
-                >
-                    Izberi lokacijo
-                </Button>
-                <span>
-                    {" "}
-                    <Icon type="environment" style={{ color: "#66c" }} /> zemljepisna dolžina:
-                    <b>{position.lng}</b> zemljepisna širina:{" "}
-                    <b>{position.lat}</b>
-                </span>
-                <hr />
-            </Form.Item>
-            <Form.Item>
-                <Button icon="plus" shape="round" onClick={() => { toggleModal(true); setModalIndex('pointForm'); }}>
-                    Dodaj zavihek
-                </Button>
-                <List
-                    itemLayout="horizontal"
-                    dataSource={tabs}
-                    renderItem={(item, index) => (
-                        <List.Item 
-                            actions={[
-                                <Tooltip title="Uredi zavihek">
-                                    <Button
-                                        type="primary"
-                                        shape="circle"
-                                        icon="edit"
-                                        size={"large"}
-                                        onClick={() => openEditTabModal(index)}
-                                    />
-                                </Tooltip>,
-                                <Tooltip title="Odstrani zavihek">
-                                    <Button
-                                        type="danger"
-                                        shape="circle"
-                                        icon="delete"
-                                        size={"large"}
-                                        onClick={() => deleteTab(index)}
-                                    />
-                                </Tooltip>
-                            ]}
-                        >
-                            <List.Item.Meta
-                                avatar={
-                                    <Avatar src={item.images[0]} />
-                                }
-                                title={item.title}
-                                description={(item.description.length > 100 ? item.description.substr(0,100) : item.description) + "..."}
-                            />
-                        </List.Item>
-                    )}
-                />
-                <hr />
-            </Form.Item>
-            <Form.Item>
-                <Button
-                    onClick={type == "edit" ? editPrimarySubmit : addPrimarySubmit}
-                    type="primary"
-                    icon="environment"
-                    shape="round"
-                    htmlType="submit"
-                    className="login-form-button"
-                >
-                    {type == "edit" ? "Posodobi" : "Dodaj"}
-                </Button>
-            </Form.Item>
-        </Form>
-    ) : (
+
+    if (type == "edit" && !tabs) {
+        return <><Spin size="large" /></>
+    } else {
+        return !modal ? (
+            <Form style={{ minWidth: "50%" }}>
+                <Form.Item>
+                    <Button
+                        onClick={() => { toggleModal(true); setModalIndex('locationPicker'); }}
+                        icon="select"
+                        shape="round"
+                        htmlType="button"
+                        className="login-form-button"
+                    >
+                        Izberi lokacijo
+                    </Button>
+                    <span>
+                        {" "}
+                        <Icon type="environment" style={{ color: "#66c" }} /> zemljepisna dolžina:
+                        <b>{position.lng}</b> zemljepisna širina:{" "}
+                        <b>{position.lat}</b>
+                    </span>
+                    <hr />
+                </Form.Item>
+                <Form.Item>
+                    <Button icon="plus" shape="round" onClick={() => { toggleModal(true); setModalIndex('pointForm'); }}>
+                        Dodaj zavihek
+                    </Button>
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={tabs}
+                        renderItem={(item, index) => (
+                            <List.Item 
+                                actions={[
+                                    <Tooltip title="Uredi zavihek">
+                                        <Button
+                                            type="primary"
+                                            shape="circle"
+                                            icon="edit"
+                                            size={"large"}
+                                            onClick={() => openEditTabModal(index)}
+                                        />
+                                    </Tooltip>,
+                                    <Tooltip title="Odstrani zavihek">
+                                        <Button
+                                            type="danger"
+                                            shape="circle"
+                                            icon="delete"
+                                            size={"large"}
+                                            onClick={() => deleteTab(index)}
+                                        />
+                                    </Tooltip>
+                                ]}
+                            >
+                                <List.Item.Meta
+                                    avatar={
+                                        <Avatar src={item.images[0]} />
+                                    }
+                                    title={item.title}
+                                    description={(item.description.length > 100 ? item.description.substr(0,100) : item.description) + "..."}
+                                />
+                            </List.Item>
+                        )}
+                    />
+                    <hr />
+                </Form.Item>
+                <Form.Item>
+                    <Button
+                        onClick={type == "edit" ? editPrimarySubmit : addPrimarySubmit}
+                        type="primary"
+                        icon="environment"
+                        shape="round"
+                        htmlType="submit"
+                        className="login-form-button"
+                    >
+                        {type == "edit" ? "Posodobi" : "Dodaj"}
+                    </Button>
+                </Form.Item>
+            </Form>
+        ) : (
             <KoisModal {...{
                 title: getModalTitle[modalIndex],
                 content: getModalContent(modalIndex),
@@ -277,4 +281,5 @@ export default function ({ type }) {
                 confirm: hanldeOK
             }} />
         );
+    }
 }

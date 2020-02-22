@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { List, Avatar, Button } from "antd";
+import { List, Avatar, Button, Spin } from "antd";
 import KoisLink from './../common/buttonlink';
 import { Link, Switch, Route } from "react-router-dom";
 import _api from './../common/apimethods';
@@ -21,25 +21,29 @@ export default function () {
     }
 
 
-    return (
-        <>
-            <KoisLink {...{ title: "Dodaj administratorja", link: '/new/admin', icon: 'plus' }} />
-            <hr />
-            <List
-                itemLayout="horizontal"
-                dataSource={admins}
-                renderItem={item => (
-                    <List.Item>
-                        <List.Item.Meta
-                            avatar={
-                                <Avatar src={UserIcon} />
-                            }
-                            title={item.name}
-                            description={item.email}
-                        />
-                    </List.Item>
-                )}
-            />
-        </>
-    );
+    if (admins) {
+        return (
+            <>
+                <KoisLink {...{ title: "Dodaj administratorja", link: '/new/admin', icon: 'plus' }} />
+                <hr />
+                <List
+                    itemLayout="horizontal"
+                    dataSource={admins}
+                    renderItem={item => (
+                        <List.Item>
+                            <List.Item.Meta
+                                avatar={
+                                    <Avatar src={UserIcon} />
+                                }
+                                title={item.name}
+                                description={item.email}
+                            />
+                        </List.Item>
+                    )}
+                />
+            </>
+        );
+    } else {
+        return <><Spin size="large" /></>
+    }
 }

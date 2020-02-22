@@ -28,7 +28,6 @@ export default function () {
         { path: "/new/point", component: <FPoint {...{ type: "new" }} />, authRequired: true },
         { path: "/new/admin", component: <FAdmin {...{ type: "new" }} />, authRequired: true },
         { path: "/edit/point/:id", component: <FPoint {...{ type: "edit" }} />, authRequired: true },
-        { path: "/edit/admin/:id", component: <FAdmin {...{ type: "edit" }} />, authRequired: true },
 
         // detailed view routes
         { path: "/details/point/:id", component: <DPoint />, authRequired: true },
