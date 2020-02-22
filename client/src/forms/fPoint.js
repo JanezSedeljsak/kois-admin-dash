@@ -177,6 +177,22 @@ export default function ({ type }) {
 
     }
 
+    const deleteTab = index => {
+        Swal.fire({
+            title: 'Ali ste prepričani?',
+            text: "Zavihek boste popolnoma odstranili iz točke!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Da!'
+          }).then(async (result) => {
+            if (result.value) {
+                setTabs([...tabs.filter((item, itemIndex) => itemIndex != index)]);
+            }
+        });
+    }
+
     return !modal ? (
         <Form style={{ minWidth: "50%" }}>
             <Form.Item>
@@ -209,11 +225,20 @@ export default function ({ type }) {
                             actions={[
                                 <Tooltip title="Uredi zavihek">
                                     <Button
-                                    type="primary"
-                                    shape="circle"
-                                    icon="edit"
-                                    size={"large"}
-                                    onClick={() => { openEditTabModal(index) }}
+                                        type="primary"
+                                        shape="circle"
+                                        icon="edit"
+                                        size={"large"}
+                                        onClick={() => openEditTabModal(index)}
+                                    />
+                                </Tooltip>,
+                                <Tooltip title="Odstrani zavihek">
+                                    <Button
+                                        type="danger"
+                                        shape="circle"
+                                        icon="delete"
+                                        size={"large"}
+                                        onClick={() => deleteTab(index)}
                                     />
                                 </Tooltip>
                             ]}
