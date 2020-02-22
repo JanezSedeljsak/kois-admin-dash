@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Icon, Input, Button, Checkbox, Modal, List, Avatar } from "antd";
+import { Form, Icon, Input, Button, Checkbox, Modal, List, Avatar, Tooltip } from "antd";
 import LocationPicker from "react-location-picker";
 import KoisModal from './../common/modal';
 import Swal from 'sweetalert2';
@@ -8,6 +8,7 @@ import _api from './../common/apimethods';
 export default function ({ type }) {
     const [modal, setModalVisibility] = useState(false);
     const [modalIndex, setModalIndex] = useState(null);
+    const [updateIndex, setUpdateIndex] = useState(null);
     const [position, setPosition] = useState({ lat: 46.4441, lng: 15.197 });
     const [tabs, setTabs] = useState([]);
     const [pointForm, setPointForm] = useState({
@@ -39,26 +40,28 @@ export default function ({ type }) {
     const toggleModal = () => setModalVisibility(!modal);
 
     const hanldeOK = () => {
-        if (modalIndex === 'pointForm') {
+        if (['pointForm', 'updatePointForm'].includes(modalIndex)) {
             let { title, images, description } = pointForm;
             images = images.split('\n');
-            let filteredImages = images.filter(imageValidation);
-            if(filteredImages.length !== images.length)  {
-                Swal.fire({
-                    title: 'Napaka!',
-                    text: 'Najdena je bila neveljavna povezava do slike!',
-                    icon: 'error',
-                    confirmButtonText: 'Nadaljuj'
-                });
-            } else {
-                setTabs([...tabs, { title, description, images: filteredImages }]);
+            if (modalIndex == 'pointForm') {
+                setTabs([...tabs, { title, description, images }]);
                 setPointForm({
                     title: '',
                     images: '',
                     description: ''
                 });
-                setModalVisibility(false)
+            } else {
+                const tabsUpdate = tabs;
+                tabsUpdate[updateIndex] = { title, description, images };
+                setTabs([...tabsUpdate]);
+                setPointForm({
+                    title: '',
+                    images: '',
+                    description: ''
+                });
             }
+
+            setModalVisibility(false);
 
         } else setModalVisibility(false);
     };
@@ -150,6 +153,7 @@ export default function ({ type }) {
                 return getLocationFormModal();
 
             case 'pointForm':
+            case 'updatePointForm':
                 return getPointFormModal();
 
             default:
@@ -158,15 +162,19 @@ export default function ({ type }) {
     }
 
     const getModalTitle = {
-        'pointForm': 'Obrazec točke',
+        'pointForm': 'Dodaj zavihek',
+        'updatePointForm': 'Posodobi zavihek',
         'locationPicker': 'Izbirnik lokacije'
     }
 
-    const imageValidation = link => {
-        var http = new XMLHttpRequest();
-        http.open('HEAD', link, false);
-        http.send();
-        return http.status != 404;
+
+    const openEditTabModal = index => {
+        setUpdateIndex(index);
+        toggleModal(true); 
+        setModalIndex('updatePointForm');
+        const tabForEdit = tabs[index];
+        setPointForm({ ...tabForEdit, images: tabForEdit.images.join('\n') })
+
     }
 
     return !modal ? (
@@ -192,12 +200,24 @@ export default function ({ type }) {
             <Form.Item>
                 <Button icon="plus" shape="round" onClick={() => { toggleModal(true); setModalIndex('pointForm'); }}>
                     Dodaj zavihek
-        </Button>
+                </Button>
                 <List
                     itemLayout="horizontal"
                     dataSource={tabs}
-                    renderItem={item => (
-                        <List.Item>
+                    renderItem={(item, index) => (
+                        <List.Item 
+                            actions={[
+                                <Tooltip title="Uredi zavihek">
+                                    <Button
+                                    type="primary"
+                                    shape="circle"
+                                    icon="edit"
+                                    size={"large"}
+                                    onClick={() => { openEditTabModal(index) }}
+                                    />
+                                </Tooltip>
+                            ]}
+                        >
                             <List.Item.Meta
                                 avatar={
                                     <Avatar src={item.images[0]} />
