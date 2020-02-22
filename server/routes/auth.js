@@ -9,9 +9,9 @@ router.route('/user')
     .get(authorize, authController.getAllUsers);
 
 router.route('/user/:id')
-    .get(authorize, authController.getUser)
     .post(authorize, authController.updateUser)
-    .delete(authorize, authController.deleteUser);
+    .get(authorize, authController.getUser)
+    //.delete(authorize, authController.deleteUser);
 
 router.route('/login')
     .post(authController.loginUser);

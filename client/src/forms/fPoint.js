@@ -37,7 +37,16 @@ export default function ({ type }) {
 
     useEffect(() => (type == 'edit') ? getPoint() : null, []);
 
-    const toggleModal = () => setModalVisibility(!modal);
+    const toggleModal = () => { 
+        if (['pointForm', 'updatePointForm'].includes(modalIndex) && modal == true) {
+            setPointForm({
+                title: '',
+                images: '',
+                description: ''
+            });
+        }
+        setModalVisibility(!modal);
+    }
 
     const hanldeOK = () => {
         if (['pointForm', 'updatePointForm'].includes(modalIndex)) {
