@@ -20,9 +20,9 @@ export default function () {
         const id = url.substr(url.lastIndexOf('/') + 1);
         const response = await _api.getPoint({ id, _AUTH });
         if (response.status == 200) {
-            setPoint(response.data);
             getUser(response.data.userUpdated, 'updated');
             getUser(response.data.userCreated, 'created');
+            setPoint(response.data);
         }
     }
 

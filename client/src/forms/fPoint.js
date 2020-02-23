@@ -52,28 +52,43 @@ export default function ({ type }) {
         if (['pointForm', 'updatePointForm'].includes(modalIndex)) {
             let { title, images, description } = pointForm;
             images = images.split('\n');
-            if (modalIndex == 'pointForm') {
-                setTabs([...tabs, { title, description, images }]);
-                setPointForm({
-                    title: '',
-                    images: '',
-                    description: ''
-                });
+            if(validatePointForm()) {
+                if (modalIndex == 'pointForm') {
+                    setTabs([...tabs, { title, description, images }]);
+                    setPointForm({
+                        title: '',
+                        images: '',
+                        description: ''
+                    });
+                } else {
+                    const tabsUpdate = tabs;
+                    tabsUpdate[updateIndex] = { title, description, images };
+                    setTabs([...tabsUpdate]);
+                    setPointForm({
+                        title: '',
+                        images: '',
+                        description: ''
+                    });
+                }
+
+                setModalVisibility(false);
+
             } else {
-                const tabsUpdate = tabs;
-                tabsUpdate[updateIndex] = { title, description, images };
-                setTabs([...tabsUpdate]);
-                setPointForm({
-                    title: '',
-                    images: '',
-                    description: ''
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Obrazca niste pravilno izpolnili!'
                 });
             }
 
-            setModalVisibility(false);
-
         } else setModalVisibility(false);
     };
+
+
+    const validatePointForm = () => {
+        const validFileds = Object.values(pointForm).filter(item => item.length).length;
+        return Object.values(pointForm).length == validFileds;
+    }
 
     const getPointFormModal = () => {
         return (
