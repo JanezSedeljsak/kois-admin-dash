@@ -36,7 +36,7 @@ export default function () {
     }
 
     useEffect(() => {
-        getPoint();
+        getPoint()
     }, []);
 
     if (point) {
@@ -58,7 +58,7 @@ export default function () {
                 value: userUpdated
         }];
         return (
-            <>
+            <div>
                 {(tabs.length > 1) && (
                     <>
                         <div>
@@ -73,7 +73,7 @@ export default function () {
                     </>
                 )}
     
-                <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
+                <div className="carousel slide" data-ride="carousel">
                     <div className="carousel-inner" style={{ height: "70vh" }}>
 
                         {openedTab.images.map((image, i) => (
@@ -127,9 +127,9 @@ export default function () {
                         dangerouslySetInnerHTML={{ __html: stringify(drawMarker)}} 
                     />
                 </div>
-            </>
+            </div>
         );
     } else {
-        return <><Spin size="large" /></>
+        return <div><Spin size="large" /></div>
     }
 }

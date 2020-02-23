@@ -30,7 +30,7 @@ export default function () {
         { path: "/edit/point/:id", component: <FPoint {...{ type: "edit" }} />, authRequired: true },
 
         // detailed view routes
-        { path: "/details/point/:id", component: <DPoint />, authRequired: true },
+        { path: "/detailed/point/:id", component: <DPoint />, authRequired: true },
 
         // home route
         { path: '', component: <Home />, authRequired: false },

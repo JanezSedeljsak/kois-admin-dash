@@ -3,10 +3,12 @@ import { Card, Button, Tooltip, Spin } from "antd";
 import KoisLink from "./../common/buttonlink";
 import _api from "./../common/apimethods";
 import Swal from 'sweetalert2';
+import { useHistory } from "react-router-dom";
 
 const { Meta } = Card;
 
 export default function () {
+    const history = useHistory();
     const [points, setPoints] = useState([]);
 
     useEffect(() => {
@@ -46,9 +48,9 @@ export default function () {
         });
     }
 
-    if (points) {
+    if (points.length) {
         return (
-            <>
+            <div>
                 <KoisLink
                     {...{ title: "Dodaj točko", link: "/new/point", icon: "plus" }}
                 />
@@ -81,7 +83,7 @@ export default function () {
                                     shape="circle"
                                     icon="fullscreen"
                                     size={"large"}
-                                    href={`/details/point/${_id}`}
+                                    onClick={() => history.push(`/detailed/point/${_id}`)}
                                 />
                             </Tooltip>
                             <Tooltip title="Uredi">
@@ -91,7 +93,7 @@ export default function () {
                                     shape="circle"
                                     icon="edit"
                                     size={"large"}
-                                    href={`/edit/point/${_id}`}
+                                    onClick={() => history.push(`/edit/point/${_id}`)}
                                 />
                             </Tooltip>
                             <Tooltip title="Odstrani točko">
@@ -107,9 +109,9 @@ export default function () {
                         </Card>
                     ))}
                 </div>
-            </>
+            </div>
         );
     } else {
-        return <><Spin size="large" /></>
+        return <div><Spin size="large" /></div>
     }
 }

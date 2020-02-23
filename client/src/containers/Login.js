@@ -8,14 +8,14 @@ const { useEffect, useState } = React;
 
 export default (props) => {
     const history = useHistory();
+    const [ dispalyForm, setDisplayForm ] = useState(false);
 
     const [form, setForm] = useState({
         email: "",
         password: ""
     });
 
-    const useMountEffect = (fun) => useEffect(fun, []);
-    useMountEffect(() => {
+    useEffect(() => {
         const loginURL = window.location.href;
         let status = null;
         ['401', '406', '420'].forEach(_status => {
@@ -36,9 +36,11 @@ export default (props) => {
             }).then(() => {
                 window.location.href = loginURL.substring(0, loginURL.indexOf('?'));
             });
+        } else {
+            setDisplayForm(true);
         }
         localStorage.removeItem('_kToken');
-    });
+    }, []);
 
     const validateForm = () => {
         const { email , password } = form;
@@ -60,43 +62,47 @@ export default (props) => {
         }
     };
 
-    return (
-        <form>
-            <div className="form-group">
-                <label for="email" className="bmd-label-floating">E-pošta</label>
-                <input 
-                    id="email"
-                    type="email" 
-                    className="form-control" 
-                    value={form.email} 
-                    minLength="5"
-                    onChange={event => {
-                        setForm({ email: event.target.value, password: form.password })
-                    }}
-                />
-            </div>
-            <div className="form-group">
-                <label for="password" className="bmd-label-floating">Geslo</label>
-                <input 
-                    id="password"
-                    type="password" 
-                    minLength="5"
-                    className="form-control" 
-                    value={form.password} 
-                    onChange={event => {
-                        setForm({ email: form.email, password: event.target.value })
-                    }}
-                />
-            </div>
-            <Button
-                type="primary"
-                icon="login"
-                shape="round"
-                className="login-form-button"
-                onClick={handleLogin}
-                disabled={!validateForm()}
-            >Prijava
-            </Button>
-        </form>
-    );
+    if (dispalyForm) {
+        return (
+            <form>
+                <div className="form-group">
+                    <label for="email" className="bmd-label-floating">E-pošta</label>
+                    <input 
+                        id="email"
+                        type="email" 
+                        className="form-control" 
+                        value={form.email} 
+                        minLength="5"
+                        onChange={event => {
+                            setForm({ email: event.target.value, password: form.password })
+                        }}
+                    />
+                </div>
+                <div className="form-group">
+                    <label for="password" className="bmd-label-floating">Geslo</label>
+                    <input 
+                        id="password"
+                        type="password" 
+                        minLength="5"
+                        className="form-control" 
+                        value={form.password} 
+                        onChange={event => {
+                            setForm({ email: form.email, password: event.target.value })
+                        }}
+                    />
+                </div>
+                <Button
+                    type="primary"
+                    icon="login"
+                    shape="round"
+                    className="login-form-button"
+                    onClick={handleLogin}
+                    disabled={!validateForm()}
+                >Prijava
+                </Button>
+            </form>
+        );
+    } else {
+        return <></>
+    }
 };

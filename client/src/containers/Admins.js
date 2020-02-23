@@ -21,9 +21,9 @@ export default function () {
     }
 
 
-    if (admins) {
+    if (admins.length) {
         return (
-            <>
+            <div>
                 <KoisLink {...{ title: "Dodaj administratorja", link: '/new/admin', icon: 'plus' }} />
                 <hr />
                 <List
@@ -41,9 +41,9 @@ export default function () {
                         </List.Item>
                     )}
                 />
-            </>
+            </div>
         );
     } else {
-        return <><Spin size="large" /></>
+        return <div><Spin size="large" /></div>
     }
 }

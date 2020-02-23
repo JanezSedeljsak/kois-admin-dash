@@ -5,7 +5,7 @@ import React from "react";
 export default function() {
   return (
     <>
-      <div style={{ padding: 20 }}>
+      <div style={{ padding: 10 }}>
         <img
           style={{
             width: "100%",
@@ -16,7 +16,7 @@ export default function() {
         <img
           style={{
             width: "100%",
-            padding: 15,
+            padding: 20,
             paddingBottom: 0
           }}
           src={ScvLogo}
