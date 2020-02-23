@@ -25,7 +25,7 @@ exports.loginUser = (req, res, next) => {
         });
         res.status(200).json({
             token: jwtToken,
-            expiresIn: 3600,
+            expiresIn: 7200,
             msg: getUser
         });
     }).catch(err => {

@@ -11,7 +11,6 @@ export default function ({ content, toggle, visibility, title, confirm }) {
         if (title != 'Izbirnik lokacije') {
             setMount(true);
             if (didMountRef.current) {
-                console.log($('textarea'));
                 $('textarea').each(function() {
                     $(this).height(0).height(this.scrollHeight)
                 });
