@@ -16,18 +16,23 @@ export default (props) => {
 
     const useMountEffect = (fun) => useEffect(fun, []);
     useMountEffect(() => {
-        let loginURL = window.location.href;
-        if(loginURL.includes('401')) {
+        const loginURL = window.location.href;
+        let status = null;
+        ['401', '406', '420'].forEach(_status => {
+            if (loginURL.includes(_status)) {
+                status = _status;
+                return;
+            }
+        });
+        if (status) {
+            const msg = {
+                '401': 'Preusmeritev zaradi avtorizacije uporabnika!',
+                '406': 'Prijava ni bila uspešna!',
+                '420': 'Odjava je bila uspešna!'
+            };
             Swal.fire({
-                icon: 'error',
-                title: 'Preusmeritev zaradi avtorizacije uporabnika!'
-            }).then(() => {
-                window.location.href = loginURL.substring(0, loginURL.indexOf('?'));
-            });
-        } else if (loginURL.includes('406')) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Prijava ni bila uspešna!'
+                icon: (status == 420) ? 'success' : 'error',
+                title: msg[status]
             }).then(() => {
                 window.location.href = loginURL.substring(0, loginURL.indexOf('?'));
             });
