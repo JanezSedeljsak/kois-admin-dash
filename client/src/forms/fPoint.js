@@ -86,7 +86,6 @@ export default function ({ type }) {
         } else setModalVisibility(false);
     };
 
-
     const validatePointForm = () => {
         const validFileds = Object.values(pointForm).filter(item => item.length).length;
         return Object.values(pointForm).length == validFileds;
@@ -227,7 +226,15 @@ export default function ({ type }) {
             <Form style={{ minWidth: "50%" }}>
                 <Form.Item>
                     <Button
+                        icon="folder-add" 
+                        shape="round" 
+                        onClick={() => { toggleModal(true); setModalIndex('pointForm'); }}
+                    >
+                        Dodaj zavihek
+                    </Button>
+                    <Button
                         onClick={() => { toggleModal(true); setModalIndex('locationPicker'); }}
+                        style={{ marginLeft: 10 }}
                         icon="select"
                         shape="round"
                         htmlType="button"
@@ -235,8 +242,7 @@ export default function ({ type }) {
                     >
                         Izberi lokacijo
                     </Button>
-                    <span>
-                        {" "}
+                    <span style={{ fontSize: 18, marginLeft: 10 }}>
                         <Icon type="environment" style={{ color: "#66c" }} /> zemljepisna dolžina:
                         <b>{position.lng}</b> zemljepisna širina:{" "}
                         <b>{position.lat}</b>
@@ -244,9 +250,6 @@ export default function ({ type }) {
                     <hr />
                 </Form.Item>
                 <Form.Item>
-                    <Button icon="plus" shape="round" onClick={() => { toggleModal(true); setModalIndex('pointForm'); }}>
-                        Dodaj zavihek
-                    </Button>
                     <List
                         itemLayout="horizontal"
                         dataSource={tabs}
@@ -293,8 +296,9 @@ export default function ({ type }) {
                         shape="round"
                         htmlType="submit"
                         className="login-form-button"
+                        disabled={!tabs.length}
                     >
-                        {type == "edit" ? "Posodobi" : "Dodaj"}
+                        {type == "edit" ? "Posodobi točko" : "Dodaj točko"}
                     </Button>
                 </Form.Item>
             </Form>

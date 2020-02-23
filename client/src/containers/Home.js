@@ -6,6 +6,6 @@ export default function () {
         document.getElementById('container').style = { padding: "0 !important" };
     }, []);
     return (
-        <img src={WelcomeImage} width="100%" />
+        <img src={WelcomeImage} width="100%" style={{ maxHeight: "80vh" }} />
     );
 }
