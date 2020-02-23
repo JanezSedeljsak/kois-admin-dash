@@ -45,3 +45,7 @@ form label {
     height: 250px !important;
     object-fit: cover !important;
 }
+
+.ant-layout {
+    background-color: #fff !important;
+}

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import WelcomeImage from './../images/kois-welcome.png';
 
-export default function() {
-
-  return (
-    <h1>
-        Welcome to Kois
-    </h1>
-  );
+export default function () {
+    useEffect(() => {
+        document.getElementById('container').style = { padding: "0 !important" };
+    }, []);
+    return (
+        <img src={WelcomeImage} width="100%" />
+    );
 }
