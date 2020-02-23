@@ -40,7 +40,7 @@ export default function () {
                         'Točka je bila odstranjena.',
                         'success'
                     );
-                    getPoints();
+                    getPoints();   
                 }
             }
         });

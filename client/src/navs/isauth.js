@@ -22,7 +22,7 @@ export default function() {
         />
       </Menu.Item>
       <Menu.Item key="/login">
-        <KoisLink {...{ link: "/login", title: "Odjava", icon: "logout" }} />
+        <KoisLink {...{ link: "/login?status=420", title: "Odjava", icon: "logout" }} />
       </Menu.Item>
     </Menu>
   );
