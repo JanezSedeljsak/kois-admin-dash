@@ -16,6 +16,22 @@ export default (props) => {
 
     const useMountEffect = (fun) => useEffect(fun, []);
     useMountEffect(() => {
+        let loginURL = window.location.href;
+        if(loginURL.includes('401')) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Preusmeritev zaradi avtorizacije uporabnika!'
+            }).then(() => {
+                window.location.href = loginURL.substring(0, loginURL.indexOf('?'));
+            });
+        } else if (loginURL.includes('406')) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Prijava ni bila uspešna!'
+            }).then(() => {
+                window.location.href = loginURL.substring(0, loginURL.indexOf('?'));
+            });
+        }
         localStorage.removeItem('_kToken');
     });
 
@@ -36,11 +52,6 @@ export default (props) => {
                 window.location.reload();
             });
             localStorage.setItem('_kToken', login.data.token);
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Prijava ni bila uspešna!'
-            })
         }
     };
 

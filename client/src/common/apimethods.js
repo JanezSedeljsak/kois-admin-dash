@@ -3,6 +3,18 @@ import axios from 'axios';
 // if development mode use another separate server for api
 const _API_ = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'localhost:5000' : '';
 
+
+axios.interceptors.response.use(response => {
+    return response;
+ }, error => {
+   if (error.response.status === 401) {
+       window.location = '/login?error=401';
+   } else if (error.response.status === 406) {
+        window.location = '/login?error=406';
+   }
+   return error;
+ });
+
 export default class {
     static async register({ name, email, password, _AUTH }) {
         return new Promise(async (resolve, reject) => {
@@ -13,7 +25,7 @@ export default class {
                 },
             })
                 .then(resolve)
-                .catch(resolve);
+                .catch(reject);
         });
     }
 
@@ -24,7 +36,7 @@ export default class {
                 password: password
             })
                 .then(resolve)
-                .catch(resolve);
+                .catch(reject);
         });
     }
 
@@ -37,7 +49,7 @@ export default class {
                 }
             })
                 .then(resolve)
-                .catch(resolve);
+                .catch(reject);
         });
     }
 
@@ -51,7 +63,7 @@ export default class {
                 }
             })
                 .then(resolve)
-                .catch(resolve);
+                .catch(reject);
         });
     }
 
@@ -79,7 +91,7 @@ export default class {
                 }
             })
                 .then(resolve)
-                .catch(resolve);
+                .catch(reject);
         });
 
     }
@@ -94,7 +106,7 @@ export default class {
                 }
             })
                 .then(resolve)
-                .catch(resolve);
+                .catch(reject);
         });
     }
 
@@ -122,7 +134,7 @@ export default class {
                 }
             })
                 .then(resolve)
-                .catch(resolve);
+                .catch(reject);
         });
     }
 }

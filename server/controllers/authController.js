@@ -13,14 +13,14 @@ exports.loginUser = (req, res, next) => {
         }
     }).then(response => {
         if (!response) {
-            return res.status(401).json({
+            return res.status(406).json({
                 message: "Authentication failed"
             });
         }
         let jwtToken = jwt.sign({
             email: getUser.email,
             userId: getUser._id
-        }, "longer-secret-is-better", {
+        }, "kois-scv-js-spp", {
             expiresIn: "1h"
         });
         res.status(200).json({

@@ -35,7 +35,9 @@ export default function ({ type }) {
         }
     }
 
-    useEffect(() => (type == 'edit') ? getPoint() : null, []);
+    useEffect(() => {
+        if (type == 'edit') getPoint();
+    }, []);
 
     const toggleModal = () => { 
         if (['pointForm', 'updatePointForm'].includes(modalIndex) && modal == true) {
