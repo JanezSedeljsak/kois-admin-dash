@@ -9,7 +9,8 @@ const isDev = process.env.NODE_ENV !== "production";
 mongoose.Promise = global.Promise;
 mongoose.connect(config.db, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 }).then(
     () => console.log('Database connected'), 
     error =>  console.log("Database can't be connected: " + error)
@@ -19,7 +20,7 @@ mongoose.set('useCreateIndex', true);
 
 const app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded( { extended: false } ));
+app.use(bodyParser.urlencoded( { extended: true } ));
 app.use(cors());
 
 // Serve the static files from the React app

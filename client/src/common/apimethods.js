@@ -6,15 +6,10 @@ const _API_ = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') 
 export default class {
     static async register({ name, email, password, _AUTH }) {
         return new Promise(async (resolve, reject) => {
-            await axios.post(`${_API_}/api/auth/user`, {
-                params: {
-                    name: name,
-                    email: email,
-                    password: password
-                },
+            await axios.post(`${_API_}/api/auth/user`, { name, email, password  }, {
                 headers: {
                     'Authorization': `Token ${_AUTH}`,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 },
             })
                 .then(resolve)
@@ -38,7 +33,21 @@ export default class {
             await axios.get(`${_API_}/api/auth/user`, {
                 headers: {
                     'Authorization': `Token ${_AUTH}`,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(resolve)
+                .catch(resolve);
+        });
+    }
+
+
+    static async getUser({ id, _AUTH }) {
+        return new Promise(async (resolve, reject) => {
+            await axios.get(`${_API_}/api/auth/user/${id}`, {
+                headers: {
+                    'Authorization': `Token ${_AUTH}`,
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(resolve)
@@ -49,17 +58,14 @@ export default class {
 
     static async createPoint({ data, _AUTH }) {
         return new Promise(async (resolve, reject) => {
-            await axios.post(`${_API_}/api/common/point`, {
-                params: {
-                    point: data
-                },
+            await axios.post(`${_API_}/api/common/point`, JSON.stringify({data: data}), {
                 headers: {
                     'Authorization': `Token ${_AUTH}`,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 },
             })
                 .then(resolve)
-                .catch(resolve);
+                .catch(() => resolve({ error: true }));
         });
     }
 
@@ -69,7 +75,7 @@ export default class {
             await axios.get(`${_API_}/api/common/point`, {
                 headers: {
                     'Authorization': `Token ${_AUTH}`,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(resolve)
@@ -78,13 +84,41 @@ export default class {
 
     }
 
+
+    static async getPoint({ id, _AUTH }) {
+        return new Promise(async (resolve, reject) => {
+            await axios.get(`${_API_}/api/common/point/${id}`, {
+                headers: {
+                    'Authorization': `Token ${_AUTH}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(resolve)
+                .catch(resolve);
+        });
+    }
+
+
+    static async updatePoint({ id, data, _AUTH }) {
+        return new Promise(async (resolve, reject) => {
+            await axios.post(`${_API_}/api/common/point/${id}`, JSON.stringify({data: data}), {
+                headers: {
+                    'Authorization': `Token ${_AUTH}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(resolve)
+                .catch(() => resolve({ error: true }));
+        });
+    }
+
     
     static async deletePoint({ id, _AUTH }) {
         return new Promise(async (resolve, reject) => {
             await axios.delete(`${_API_}/api/common/point/${id}`, {
                 headers: {
                     'Authorization': `Token ${_AUTH}`,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(resolve)

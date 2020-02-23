@@ -36,7 +36,8 @@ exports.loginUser = (req, res, next) => {
 }
 
 exports.createUser = (req, res, next) => {
-    const { name, email, password } = req.body.params;
+    console.log(req.body);
+    const { name, email, password } = req.body;
     bcrypt.hash(password, 10).then((hash) => {
         const user = new userSchema({
             name,
@@ -72,7 +73,7 @@ exports.getUser = (req, res, next) => {
             return next(error);
         } else {
             res.status(200).json({
-                msg: data
+                ...data
             })
         }
     })
@@ -84,10 +85,8 @@ exports.updateUser = (req, res, next) => {
     }, (error, data) => {
         if (error) {
             return next(error);
-            console.log(error)
         } else {
             res.json(data)
-            console.log('User successfully updated!')
         }
     })
 }

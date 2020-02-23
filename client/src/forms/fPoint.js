@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Icon, Input, Button, Checkbox, Modal, List, Avatar } from "antd";
+import { Form, Icon, Input, Button, Checkbox, Modal, List, Avatar, Tooltip, Spin } from "antd";
 import LocationPicker from "react-location-picker";
 import KoisModal from './../common/modal';
 import Swal from 'sweetalert2';
@@ -8,6 +8,7 @@ import _api from './../common/apimethods';
 export default function ({ type }) {
     const [modal, setModalVisibility] = useState(false);
     const [modalIndex, setModalIndex] = useState(null);
+    const [updateIndex, setUpdateIndex] = useState(null);
     const [position, setPosition] = useState({ lat: 46.4441, lng: 15.197 });
     const [tabs, setTabs] = useState([]);
     const [pointForm, setPointForm] = useState({
@@ -16,36 +17,78 @@ export default function ({ type }) {
         description: ''
     });
 
+
+
     const handleLocationChange = ({ position, address, places }) => {
         setPosition(position);
     };
 
-    const toggleModal = () => setModalVisibility(!modal);
+    const getPoint = async () => {
+        const _AUTH = localStorage.getItem('_kToken');
+        const url = window.location.href;
+        const id = url.substr(url.lastIndexOf('/') + 1);
+        const response = await _api.getPoint({ id, _AUTH });
+        if (response.status == 200) {
+            const responseLocation = response.data.location;
+            setTabs(response.data.tabs);
+            setPosition({ lat: responseLocation.lat, lng: responseLocation.lon })
+        }
+    }
+
+    useEffect(() => (type == 'edit') ? getPoint() : null, []);
+
+    const toggleModal = () => { 
+        if (['pointForm', 'updatePointForm'].includes(modalIndex) && modal == true) {
+            setPointForm({
+                title: '',
+                images: '',
+                description: ''
+            });
+        }
+        setModalVisibility(!modal);
+    }
 
     const hanldeOK = () => {
-        if (modalIndex === 'pointForm') {
+        if (['pointForm', 'updatePointForm'].includes(modalIndex)) {
             let { title, images, description } = pointForm;
             images = images.split('\n');
-            let filteredImages = images.filter(imageValidation);
-            if(filteredImages.length !== images.length)  {
-                Swal.fire({
-                    title: 'Napaka!',
-                    text: 'Najdena je bila neveljavna povezava do slike!',
-                    icon: 'error',
-                    confirmButtonText: 'Nadaljuj'
-                });
+            if(validatePointForm()) {
+                if (modalIndex == 'pointForm') {
+                    setTabs([...tabs, { title, description, images }]);
+                    setPointForm({
+                        title: '',
+                        images: '',
+                        description: ''
+                    });
+                } else {
+                    const tabsUpdate = tabs;
+                    tabsUpdate[updateIndex] = { title, description, images };
+                    setTabs([...tabsUpdate]);
+                    setPointForm({
+                        title: '',
+                        images: '',
+                        description: ''
+                    });
+                }
+
+                setModalVisibility(false);
+
             } else {
-                setTabs([...tabs, { title, description, images: filteredImages }]);
-                setPointForm({
-                    title: '',
-                    images: '',
-                    description: ''
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Obrazca niste pravilno izpolnili!'
                 });
-                setModalVisibility(false)
             }
 
         } else setModalVisibility(false);
     };
+
+
+    const validatePointForm = () => {
+        const validFileds = Object.values(pointForm).filter(item => item.length).length;
+        return Object.values(pointForm).length == validFileds;
+    }
 
     const getPointFormModal = () => {
         return (
@@ -94,7 +137,24 @@ export default function ({ type }) {
         />);
     }
 
-    const primarySubmit = async () => {
+    const editPrimarySubmit = async () => {
+        const _AUTH = localStorage.getItem('_kToken');
+        const url = window.location.href;
+        const id = url.substr(url.lastIndexOf('/') + 1);
+        const data = {
+            location: { ...position, lon: position.lng },
+            tabs: tabs
+        };
+        const response = await _api.updatePoint({ id, data, _AUTH })
+        if (response.status == 200) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Točka je bila uspešno posodobljena!'
+            });
+        }
+    }
+
+    const addPrimarySubmit = async () => {
         const _AUTH = localStorage.getItem('_kToken');
         const data = {
             location: { ...position, lon: position.lng },
@@ -117,6 +177,7 @@ export default function ({ type }) {
                 return getLocationFormModal();
 
             case 'pointForm':
+            case 'updatePointForm':
                 return getPointFormModal();
 
             default:
@@ -125,72 +186,117 @@ export default function ({ type }) {
     }
 
     const getModalTitle = {
-        'pointForm': 'Obrazec točke',
+        'pointForm': 'Dodaj zavihek',
+        'updatePointForm': 'Posodobi zavihek',
         'locationPicker': 'Izbirnik lokacije'
     }
 
-    const imageValidation = link => {
-        var http = new XMLHttpRequest();
-        http.open('HEAD', link, false);
-        http.send();
-        return http.status != 404;
+
+    const openEditTabModal = index => {
+        setUpdateIndex(index);
+        toggleModal(true); 
+        setModalIndex('updatePointForm');
+        const tabForEdit = tabs[index];
+        setPointForm({ ...tabForEdit, images: tabForEdit.images.join('\n') })
+
     }
 
-    return !modal ? (
-        <Form style={{ minWidth: "50%" }}>
-            <Form.Item>
-                <Button
-                    onClick={() => { toggleModal(true); setModalIndex('locationPicker'); }}
-                    icon="select"
-                    shape="round"
-                    htmlType="button"
-                    className="login-form-button"
-                >
-                    Izberi lokacijo
-                </Button>
-                <span>
-                    {" "}
-                    <Icon type="environment" style={{ color: "#66c" }} /> zemljepisna dolžina:
-                    <b>{position.lng}</b> zemljepisna širina:{" "}
-                    <b>{position.lat}</b>
-                </span>
-                <hr />
-            </Form.Item>
-            <Form.Item>
-                <Button icon="plus" shape="round" onClick={() => { toggleModal(true); setModalIndex('pointForm'); }}>
-                    Dodaj zavihek
-        </Button>
-                <List
-                    itemLayout="horizontal"
-                    dataSource={tabs}
-                    renderItem={item => (
-                        <List.Item>
-                            <List.Item.Meta
-                                avatar={
-                                    <Avatar src={item.images[0]} />
-                                }
-                                title={item.title}
-                                description={(item.description.length > 100 ? item.description.substr(0,100) : item.description) + "..."}
-                            />
-                        </List.Item>
-                    )}
-                />
-                <hr />
-            </Form.Item>
-            <Form.Item>
-                <Button
-                    onClick={primarySubmit}
-                    type="primary"
-                    icon="environment"
-                    shape="round"
-                    htmlType="submit"
-                    className="login-form-button"
-                >
-                    {type == "edit" ? "Posodobi" : "Dodaj"}
-                </Button>
-            </Form.Item>
-        </Form>
-    ) : (
+    const deleteTab = index => {
+        Swal.fire({
+            title: 'Ali ste prepričani?',
+            text: "Zavihek boste popolnoma odstranili iz točke!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Da!'
+          }).then(async (result) => {
+            if (result.value) {
+                setTabs([...tabs.filter((item, itemIndex) => itemIndex != index)]);
+            }
+        });
+    }
+
+
+    if (type == "edit" && !tabs) {
+        return <><Spin size="large" /></>
+    } else {
+        return !modal ? (
+            <Form style={{ minWidth: "50%" }}>
+                <Form.Item>
+                    <Button
+                        onClick={() => { toggleModal(true); setModalIndex('locationPicker'); }}
+                        icon="select"
+                        shape="round"
+                        htmlType="button"
+                        className="login-form-button"
+                    >
+                        Izberi lokacijo
+                    </Button>
+                    <span>
+                        {" "}
+                        <Icon type="environment" style={{ color: "#66c" }} /> zemljepisna dolžina:
+                        <b>{position.lng}</b> zemljepisna širina:{" "}
+                        <b>{position.lat}</b>
+                    </span>
+                    <hr />
+                </Form.Item>
+                <Form.Item>
+                    <Button icon="plus" shape="round" onClick={() => { toggleModal(true); setModalIndex('pointForm'); }}>
+                        Dodaj zavihek
+                    </Button>
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={tabs}
+                        renderItem={(item, index) => (
+                            <List.Item 
+                                actions={[
+                                    <Tooltip title="Uredi zavihek">
+                                        <Button
+                                            type="primary"
+                                            shape="circle"
+                                            icon="edit"
+                                            size={"large"}
+                                            onClick={() => openEditTabModal(index)}
+                                        />
+                                    </Tooltip>,
+                                    <Tooltip title="Odstrani zavihek">
+                                        <Button
+                                            type="danger"
+                                            shape="circle"
+                                            icon="delete"
+                                            size={"large"}
+                                            onClick={() => deleteTab(index)}
+                                        />
+                                    </Tooltip>
+                                ]}
+                            >
+                                <List.Item.Meta
+                                    avatar={
+                                        <Avatar src={item.images[0]} />
+                                    }
+                                    title={item.title}
+                                    description={(item.description.length > 100 ? item.description.substr(0,100) : item.description) + "..."}
+                                />
+                            </List.Item>
+                        )}
+                    />
+                    <hr />
+                </Form.Item>
+                <Form.Item>
+                    <Button
+                        onClick={type == "edit" ? editPrimarySubmit : addPrimarySubmit}
+                        type="primary"
+                        icon="environment"
+                        shape="round"
+                        htmlType="submit"
+                        className="login-form-button"
+                    >
+                        {type == "edit" ? "Posodobi" : "Dodaj"}
+                    </Button>
+                </Form.Item>
+            </Form>
+        ) : (
             <KoisModal {...{
                 title: getModalTitle[modalIndex],
                 content: getModalContent(modalIndex),
@@ -199,4 +305,5 @@ export default function ({ type }) {
                 confirm: hanldeOK
             }} />
         );
+    }
 }

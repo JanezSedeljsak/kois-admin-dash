@@ -12,8 +12,8 @@ let pointSchema = new Schema({
         images: [{ type: String }],
         description: { type: String }
     }],
-    userCreated: Schema.Types.ObjectId,
-    userUpdated: Schema.Types.ObjectId,
+    userCreated: { type: String, default: "" },
+    userUpdated: { type: String, default: "" },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 }, {
