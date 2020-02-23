@@ -57,7 +57,7 @@ export default function () {
                                 <KoisRouter />
                             </div>
                         </Content>
-                        <Footer style={{ textAlign: "center" }}>
+                        <Footer style={{ textAlign: "center", height: 48, fontSize: 16, padding: 11 }}>
                             Samo Pritrznik & Janez Sedeljsak 2019/20 ©
                         </Footer>
                     </Layout>
