@@ -29,7 +29,7 @@ exports.loginUser = (req, res, next) => {
             msg: getUser
         });
     }).catch(err => {
-        return res.status(401).json({
+        return res.status(406).json({
             message: "Authentication failed"
         });
     });
