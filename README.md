@@ -25,6 +25,9 @@ MERN stack is the idea of using Javascript/Node for fullstack web development.
 
 Admin dashboard (CRUD - APP) that provides RESTful API for kois mobile app
 
+<hr />
+![alt text](https://github.com/JanezSedeljsak/kois-admin-dash/blob/master/screenshot.jpg)
+
 ## clone or download
 ```terminal
 $ git clone https://github.com/amazingandyyy/mern.git
