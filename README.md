@@ -2,7 +2,7 @@
 🌐 MERN Stack
 </h1>
 <p align="center">
-MongoDB, Expressjs, React/Redux, Nodejs
+MongoDB, Expressjs, React, Nodejs
 </p>
 
 <p align="center">
@@ -29,8 +29,9 @@ Admin dashboard (CRUD - APP) that provides RESTful API for kois mobile app
 
 ## clone or download
 ```terminal
-$ git clone https://github.com/amazingandyyy/mern.git
+$ git clone https://github.com/JanezSedeljsak/kois-admin-dash.git
 $ npm i
+$ cd client & npm i
 ```
 
 ## project structure
