@@ -218,9 +218,8 @@ export default function ({ type }) {
         });
     }
 
-
-    if (type == "edit" && !tabs) {
-        return <><Spin size="large" /></>
+    if (type == "edit" && !tabs.length) {
+        return <div><Spin size="large" /></div>
     } else {
         return !modal ? (
             <Form style={{ minWidth: "50%" }}>
@@ -243,8 +242,8 @@ export default function ({ type }) {
                         Izberi lokacijo
                     </Button>
                     <span style={{ fontSize: 18, marginLeft: 10 }}>
-                        <Icon type="environment" style={{ color: "#66c" }} /> zemljepisna dolžina:
-                        <b>{position.lng}</b> zemljepisna širina:{" "}
+                        <Icon type="environment" style={{ color: "#66c" }} />{" "}zemljepisna dolžina:{" "}
+                        <b>{position.lng}</b>{" "}zemljepisna širina:{" "}
                         <b>{position.lat}</b>
                     </span>
                     <hr />
