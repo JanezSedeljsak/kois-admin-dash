@@ -68,7 +68,7 @@ export default function () {
                             hoverable
                             style={{
                                 flex: "0 1 calc(25% - 16px)",
-                                minWidth: "150px",
+                                minWidth: "250px",
                                 maxWidth: "60vh",
                                 margin: "8px"
                             }}
