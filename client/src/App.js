@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "antd/dist/antd.css";
 import "./index.css";
 import { Layout, Menu, Breadcrumb, Icon, Typography } from "antd";
@@ -26,8 +26,7 @@ export default function () {
             <Layout style={{ minHeight: "100vh" }}>
                 <BrowserRouter>
                     <Sider
-                        style={{ background: "#345" }}
-                        width={"300"}
+                        width={"17%"}
                         collapsible
                         collapsed={collapsed}
                         onCollapse={setCollapsed}
@@ -36,14 +35,7 @@ export default function () {
                         {isAuth ? <IsAuthNav /> : <NonAuthNav />}
                     </Sider>
                     <Layout>
-                        <Header
-                            style={{
-                                background: "#002140",
-                                padding: 10,
-                                borderLeft: "1px solid white",
-                                boxShadow: "0 4px 2px -2px gray"
-                            }}
-                        >
+                        <Header style={{ background: "#2f3e53", padding: 10 }} >
                             <Title style={{ color: "#fff" }}>
                                 <Icon type="database" theme="filled" />{" Kois Administracija"}
                             </Title>

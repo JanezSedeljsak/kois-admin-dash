@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Menu } from 'antd';
-import KoisLink from './../common/link';
+import KoisLink from './../common/menulink';
 
 export default function () {
     const history = useHistory();
@@ -11,16 +11,18 @@ export default function () {
             item.addEventListener('click', async () => history.push(item.firstChild.id))
     ), []);
 
+    const navigationItems = [
+        { link: "/", title: "Domov", icon: "home" },
+        { link: "/login", title: "Prijava", icon: "login" }
+    ];
+    
     return (
-        <Menu theme="dark" style={{ background: "#345" }} mode="inline">
-            <Menu.Item key="/">
-                <KoisLink
-                    {...{ link: "/", title: "Domov", icon: "home" }}
-                />
-            </Menu.Item>
-            <Menu.Item key="/login">
-                <KoisLink {...{ link: "/login", title: "Prijava", icon: "login" }} />
-            </Menu.Item>
+        <Menu theme="dark" style={{ background: "#47515a" }} mode="inline">
+            {navigationItems.map((navItem, index) => (
+                <Menu.Item key={index}>
+                    <KoisLink {...navItem}/>
+                </Menu.Item>
+            ))}
         </Menu>
     );
 }

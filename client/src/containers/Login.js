@@ -18,7 +18,7 @@ export default (props) => {
     useEffect(() => {
         const loginURL = window.location.href;
         let status = null;
-        ['401', '406', '420'].forEach(_status => {
+        ['401', '406', '420', '906'].forEach(_status => {
             if (loginURL.includes(_status)) {
                 status = _status;
                 return;
@@ -28,7 +28,8 @@ export default (props) => {
             const msg = {
                 '401': 'Preusmeritev zaradi avtorizacije uporabnika!',
                 '406': 'Prijava ni bila uspešna!',
-                '420': 'Odjava je bila uspešna!'
+                '420': 'Odjava je bila uspešna!',
+                '906': 'Do te strani nimate dodeljenih pravic!'
             };
             Swal.fire({
                 icon: (status == 420) ? 'success' : 'error',

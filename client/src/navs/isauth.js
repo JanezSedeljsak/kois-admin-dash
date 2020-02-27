@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Menu } from 'antd';
-import KoisLink from './../common/link';
+import KoisLink from './../common/menulink';
 
 export default function () {
 
@@ -15,26 +15,20 @@ export default function () {
             })
         ), []);
 
+    const navigationItems = [
+        { link: "/", title: "Domov", icon: "home" },
+        { link: "/points", title: "Točke", icon: "environment" },
+        { link: "/admins", title: "Administratorji", icon: "user" },
+        { link: "/login?status=420", title: "Odjava", icon: "logout" }
+    ];
+
     return (
-        <Menu theme="dark" style={{ background: "#345" }} mode="inline">
-            <Menu.Item key="/">
-                <KoisLink
-                    {...{ link: "/", title: "Domov", icon: "home" }}
-                />
-            </Menu.Item>
-            <Menu.Item key="/points">
-                <KoisLink
-                    {...{ link: "/points", title: "Točke", icon: "environment" }}
-                />
-            </Menu.Item>
-            <Menu.Item key="/admins">
-                <KoisLink
-                    {...{ link: "/admins", title: "Administratorji", icon: "user" }}
-                />
-            </Menu.Item>
-            <Menu.Item key="/login">
-                <KoisLink {...{ link: "/login?status=420", title: "Odjava", icon: "logout" }} />
-            </Menu.Item>
+        <Menu theme="dark" style={{ background: "#47515a" }} mode="inline">
+            {navigationItems.map((navItem, index) => (
+                <Menu.Item key={index}>
+                    <KoisLink {...navItem} />
+                </Menu.Item>
+            ))}            
         </Menu>
     );
 }
