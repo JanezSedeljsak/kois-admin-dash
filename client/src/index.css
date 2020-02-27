@@ -56,7 +56,7 @@ form label {
 aside.ant-layout-sider {
     background-color: #47515a !important;
     max-width: 400px !important;
-    min-width: 80px !important;
+    min-width: 150px !important;
 }
 
 .d-block {
@@ -68,5 +68,6 @@ aside.ant-layout-sider {
 .ant-modal-content { border-radius: 0 !important; }
 .ant-modal-header { background-color: #2171bd !important; border-radius: 0 !important; }
 .ant-modal-close, .ant-modal-title { color: #eee !important }
+.ant-layout-sider-trigger { display: none !important }
 .ant-layout { background-color: #fff !important }
 .ant-modal-close { display: none !important }

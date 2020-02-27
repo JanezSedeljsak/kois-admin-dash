@@ -18,20 +18,14 @@ const { Header, Content, Footer, Sider } = Layout;
 const { Title } = Typography;
 
 export default function () {
-    const [collapsed, setCollapsed] = useState(false);
     const [isAuth, setAuth] = useState(localStorage.getItem("_kToken") || undefined);
 
     return (
         <Router history={KoisHistory}>
             <Layout style={{ minHeight: "100vh" }}>
                 <BrowserRouter>
-                    <Sider
-                        width={"17%"}
-                        collapsible
-                        collapsed={collapsed}
-                        onCollapse={setCollapsed}
-                    >
-                        {!collapsed && <KoisLogos />}
+                    <Sider width={"17%"} collapsed={false}>
+                        <KoisLogos />
                         {isAuth ? <IsAuthNav /> : <NonAuthNav />}
                     </Sider>
                     <Layout>
@@ -42,10 +36,7 @@ export default function () {
                         </Header>
                         <Content style={{ margin: "0 16px" }}>
                             <Breadcrumb style={{ margin: "16px 0" }}></Breadcrumb>
-                            <div
-                                id="container"
-                                style={{ padding: 15, background: "#fff", minHeight: "40vh" }}
-                            >
+                            <div id="container" style={{ padding: 15, background: "#fff", minHeight: "40vh" }}>
                                 <KoisRouter />
                             </div>
                         </Content>
