@@ -2,7 +2,7 @@
 🌐 MERN Stack
 </h1>
 <p align="center">
-MongoDB, Expressjs, React/Redux, Nodejs
+MongoDB, Expressjs, React, Nodejs
 </p>
 
 <p align="center">
@@ -25,10 +25,13 @@ MERN stack is the idea of using Javascript/Node for fullstack web development.
 
 Admin dashboard (CRUD - APP) that provides RESTful API for kois mobile app
 
+![alt text](https://github.com/JanezSedeljsak/kois-admin-dash/blob/master/screenshot.jpg)
+
 ## clone or download
 ```terminal
-$ git clone https://github.com/amazingandyyy/mern.git
+$ git clone https://github.com/JanezSedeljsak/kois-admin-dash.git
 $ npm i
+$ cd client & npm i
 ```
 
 ## project structure
