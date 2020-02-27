@@ -8,7 +8,7 @@ export default function RouteWrapper({
     ...rest
 }) {
     const signed = localStorage.getItem('_kToken');
-    return (isPrivate && !signed) ? <Redirect to="/login" /> : <Route {...rest} component={Component} />
+    return (isPrivate && !signed) ? <Redirect to="/login?status=906" /> : <Route {...rest} component={Component} />
 }
 
 RouteWrapper.propTypes = {
