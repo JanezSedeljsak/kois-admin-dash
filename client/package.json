@@ -19,6 +19,7 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
+    "react-tinymce": "^0.7.0",
     "svg-world-map": "^1.0.1",
     "sweetalert2": "^9.7.2",
     "virtual-dom-stringify": "^3.0.1"
