@@ -4,6 +4,7 @@ import LocationPicker from "react-location-picker";
 import KoisModal from './../common/modal';
 import Swal from 'sweetalert2';
 import _api from './../common/apimethods';
+import TinyMCE from 'react-tinymce';
 
 export default function ({ type }) {
     const [modal, setModalVisibility] = useState(false);
@@ -117,12 +118,18 @@ export default function ({ type }) {
                 </div>
                 <div className="form-group">
                     <label for="exampleInputEmail1" className="bmd-label-floating">Opis</label>
-                    <textarea
-                        className="form-control"
-                        value={pointForm.description}
-                        onChange={event => {
-                            setPointForm({ ...pointForm, description: event.target.value })
+                    <TinyMCE
+                        apiKey="cfdw8uwtdyjxz965k0wctju2xsnoyj3nnncgef9gghebc16m"
+                        content={pointForm.description}
+                        config={{
+                          menubar: 'view',
+                          plugins: 'advlist autolink lists link',
+                          toolbar:
+                            'undo redo | bold italic | \
+                            alignleft aligncenter alignright | \
+                            bullist numlist outdent indent | help'
                         }}
+                        onChange={event => setPointForm({ ...pointForm, description: event.level.content })}
                     />
                 </div>
             </form>
@@ -182,7 +189,7 @@ export default function ({ type }) {
                 return getPointFormModal();
 
             default:
-                return '<p>Prišlo je do napake!</p>'
+                return;
         }
     }
 
@@ -217,6 +224,13 @@ export default function ({ type }) {
             }
         });
     }
+
+    const renderDescription = desc => (desc.length > 100) ? (
+        <div dangerouslySetInnerHTML={{ __html: `${desc.substr(0, 100)}...`}} />   
+    ) : (
+        <div dangerouslySetInnerHTML={{ __html: desc }} />
+    );
+
 
     if (type == "edit" && !tabs.length) {
         return <div><Spin size="large" /></div>
@@ -280,7 +294,7 @@ export default function ({ type }) {
                                         <Avatar src={item.images[0]} />
                                     }
                                     title={item.title}
-                                    description={(item.description.length > 100 ? item.description.substr(0,100) : item.description) + "..."}
+                                    description={renderDescription(item.description)}
                                 />
                             </List.Item>
                         )}

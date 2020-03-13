@@ -10,18 +10,9 @@ body {
   overflow-y: scroll;
 }
 
-body::-webkit-scrollbar {
-    width: 1em;
-}
-  
-body::-webkit-scrollbar-track {
-    background-color: #2f3e53;
-    box-shadow: inset 0 0 6px #0000004d;
-}
-
-body::-webkit-scrollbar-thumb {
-    background-color: #47515a;
-    outline: 1px solid slategrey;
+body::-webkit-scrollbar-thumb, body::-webkit-scrollbar-track, body::-webkit-scrollbar {
+    width: 0px !important;
+    display: none !important;
 }
 
 code {
@@ -57,6 +48,13 @@ aside.ant-layout-sider {
     background-color: #47515a !important;
     max-width: 400px !important;
     min-width: 150px !important;
+}
+
+@media only screen and (max-width: 1000px) {
+    aside.ant-layout-sider {
+        min-width: 0px !important;
+        width: 80px !important;
+    }
 }
 
 .d-block {
