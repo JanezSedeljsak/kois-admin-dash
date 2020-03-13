@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.66a602c1.chunk.css",
+    "main.js": "/static/js/main.b8fff8e4.chunk.js",
+    "main.js.map": "/static/js/main.b8fff8e4.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.cea588d5.js",
+    "runtime-main.js.map": "/static/js/runtime-main.cea588d5.js.map",
+    "static/css/2.ff8bd605.chunk.css": "/static/css/2.ff8bd605.chunk.css",
+    "static/js/2.c06c1b22.chunk.js": "/static/js/2.c06c1b22.chunk.js",
+    "static/js/2.c06c1b22.chunk.js.map": "/static/js/2.c06c1b22.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.78ff29a40a993d8cc94ca154c4e079f3.js": "/precache-manifest.78ff29a40a993d8cc94ca154c4e079f3.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.ff8bd605.chunk.css.map": "/static/css/2.ff8bd605.chunk.css.map",
+    "static/css/main.66a602c1.chunk.css.map": "/static/css/main.66a602c1.chunk.css.map",
+    "static/js/2.c06c1b22.chunk.js.LICENSE": "/static/js/2.c06c1b22.chunk.js.LICENSE",
+    "static/media/kois-welcome.png": "/static/media/kois-welcome.4d70ee5d.png",
+    "static/media/koislogo.png": "/static/media/koislogo.e5789706.png",
+    "static/media/scvlogo.png": "/static/media/scvlogo.001b21b6.png",
+    "static/media/user.png": "/static/media/user.a9210b59.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cea588d5.js",
+    "static/css/2.ff8bd605.chunk.css",
+    "static/js/2.c06c1b22.chunk.js",
+    "static/css/main.66a602c1.chunk.css",
+    "static/js/main.b8fff8e4.chunk.js"
+  ]
+}
