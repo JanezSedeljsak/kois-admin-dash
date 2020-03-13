@@ -51,18 +51,10 @@ export default function ({ type }) {
         setModalVisibility(!modal);
     }
 
-    const addLinksToText = text => {
-        var urlRegex = /(https?:\/\/[^\s]+)/g;
-        return text.replace(urlRegex, function(url) {
-            return `<a href="${url}">${url}</a>`;
-        })
-    }
-
     const hanldeOK = () => {
         if (['pointForm', 'updatePointForm'].includes(modalIndex)) {
             let { title, images, description } = pointForm;
             images = images.split('\n');
-            description = addLinksToText(description)
             if(validatePointForm()) {
                 if (modalIndex == 'pointForm') {
                     setTabs([...tabs, { title, description, images }]);
