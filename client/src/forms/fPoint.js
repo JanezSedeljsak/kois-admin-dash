@@ -119,15 +119,17 @@ export default function ({ type }) {
                 <div className="form-group">
                     <label for="exampleInputEmail1" className="bmd-label-floating">Opis</label>
                     <TinyMCE
+                        apiKey="cfdw8uwtdyjxz965k0wctju2xsnoyj3nnncgef9gghebc16m"
                         content={pointForm.description}
                         config={{
-                            menubar: 'view',
-                            plugins: 'autolink link image lists print preview lists advlist',
-                            toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent',
+                          menubar: 'view',
+                          plugins: 'advlist autolink lists link',
+                          toolbar:
+                            'undo redo | bold italic | \
+                            alignleft aligncenter alignright | \
+                            bullist numlist outdent indent | help'
                         }}
-                        onChange={event => {
-                            setPointForm({ ...pointForm, description: event.level.content })
-                        }}
+                        onChange={event => setPointForm({ ...pointForm, description: event.level.content })}
                     />
                 </div>
             </form>
@@ -223,17 +225,12 @@ export default function ({ type }) {
         });
     }
 
-    const renderDescription = desc => {
-        if (desc.length > 100) {
-            return (
-                <div dangerouslySetInnerHTML={{ __html: `${desc.substr(100)}...`}} />
-            );
-        } else {
-            return (
-                <div dangerouslySetInnerHTML={{ __html: desc}} />
-            );
-        }
-    }
+    const renderDescription = desc => (desc.length > 100) ? (
+        <div dangerouslySetInnerHTML={{ __html: `${desc.substr(0, 100)}...`}} />   
+    ) : (
+        <div dangerouslySetInnerHTML={{ __html: desc }} />
+    );
+
 
     if (type == "edit" && !tabs.length) {
         return <div><Spin size="large" /></div>

@@ -21,7 +21,7 @@ exports.loginUser = (req, res, next) => {
             email: getUser.email,
             userId: getUser._id
         }, "kois-scv-js-spp", {
-            expiresIn: "1h"
+            expiresIn: "2h"
         });
         res.status(200).json({
             token: jwtToken,
