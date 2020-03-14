@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useEffect, useRef, useState  } from "react";
 import { Modal } from "antd";
+import $ from "jquery";
 
-export default ({ content, toggle, visibility, title, confirm }) => (
-    <Modal
-        title={title}
-        visible={visibility}
-        onOk={confirm ? confirm : toggle}
-        onCancel={toggle}
-        cancelButtonProps={{ style: { display: 'none' } }}
-        width={window.innerWidth / 1.7}
-    >{content}</Modal>
-)
+export default ({ content, toggle, visibility, title, confirm }) => {
+
+    const didMountRef = useRef(false);
+    const [mount, setMount] = useState(false);
+
+    useEffect(() => {
+        if (title != 'Izbirnik lokacije') {
+            setMount(true);
+            if (didMountRef.current) {
+                $('textarea').each(function() {
+                    $(this).height(0).height(this.scrollHeight)
+                });
+            } else didMountRef.current = true;
+        }
+    });
+
+    return (
+        <Modal
+            title={title}
+            visible={visibility}
+            onOk={confirm ? confirm : toggle}
+            onCancel={toggle}
+            cancelButtonProps={{ style: { display: 'none' } }}
+            width={window.innerWidth / 1.7}
+        >{content}</Modal>
+    )
+}

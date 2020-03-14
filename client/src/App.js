@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import "./index.css";
-import { Layout, Menu, Breadcrumb, Icon, Typography } from "antd";
+import { Layout, Breadcrumb, Icon, Typography } from "antd";
 import { BrowserRouter } from "react-router-dom";
 import { Router } from "react-router";
 import KoisHistory from './history';

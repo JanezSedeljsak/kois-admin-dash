@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import WelcomeImage from './../images/kois-welcome.png';
 
 export default () => (
