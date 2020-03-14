@@ -1,4 +1,4 @@
-import { Icon, Button, Menu } from "antd";
+import { Icon } from "antd";
 import React from 'react';
 
 // ONLY USED IN app.js !!!!!

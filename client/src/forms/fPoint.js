@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Icon, Input, Button, Checkbox, Modal, List, Avatar, Tooltip, Spin } from "antd";
+import { Form, Icon, Button, List, Avatar, Tooltip, Spin } from "antd";
 import LocationPicker from "react-location-picker";
 import KoisModal from './../common/modal';
 import Swal from 'sweetalert2';

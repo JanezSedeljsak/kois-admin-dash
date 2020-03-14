@@ -18,7 +18,7 @@ export default function () {
     async function getPoints() {
         const token = localStorage.getItem("_kToken");
         const response = await _api.getPoints(token);
-        if (response.status == 200) {
+        if (response.status === 200) {
             setPoints(response.data);
         }
     }
@@ -36,7 +36,7 @@ export default function () {
         }).then(async (result) => {
             if (result.value) {
                 const response = await _api.deletePoint({ id, _AUTH });
-                if (response.status == 200) {
+                if (response.status === 200) {
                     Swal.fire(
                         'Uspešno odstranjeno!',
                         'Točka je bila odstranjena.',
