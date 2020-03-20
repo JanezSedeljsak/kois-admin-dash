@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 const { useState } = React;
 
-export default () => {
+export default function () {
     const [form, setForm] = useState({
         name: "",
         email: "",
@@ -23,12 +23,11 @@ export default () => {
         if (!validateForm()) return;
         const _AUTH = localStorage.getItem("_kToken");
         const register = await _api.register({...form, _AUTH });
-        if (register.status == 200) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Uporabnik je bil uspešno dodan!'
-            });
-        }
+        const message = (register.status == 200) ? 
+            { icon: 'success', title: 'Uporabnik je bil uspešno dodan!' }
+            : { icon: 'error', title: 'Prišlo je do napake pri dodajanju uporabnika!' };
+
+        Swal.fire(message);
     };
 
     return (

@@ -18,11 +18,7 @@ export default function ({ type }) {
         description: ''
     });
 
-
-
-    const handleLocationChange = ({ position, address, places }) => {
-        setPosition(position);
-    };
+    const handleLocationChange = ({ position }) => setPosition(position);
 
     const getPoint = async () => {
         const _AUTH = localStorage.getItem('_kToken');
@@ -30,9 +26,9 @@ export default function ({ type }) {
         const id = url.substr(url.lastIndexOf('/') + 1);
         const response = await _api.getPoint({ id, _AUTH });
         if (response.status == 200) {
-            const responseLocation = response.data.location;
-            setTabs(response.data.tabs);
-            setPosition({ lat: responseLocation.lat, lng: responseLocation.lon })
+            const { location, tabs } = response.data;
+            setTabs(tabs);
+            setPosition({ lat: location.lat, lng: location.lon })
         }
     }
 

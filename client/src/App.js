@@ -26,7 +26,7 @@ export default function () {
 
     useEffect(() => {
         setNavCollapsed(window.innerWidth < 1000);
-        window.addEventListener('resize', handleResize)
+        window.addEventListener('resize', handleResize);
     }, []);
 
     return (

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState  } from "react";
 import { Modal } from "antd";
 import $ from "jquery";
 
-export default ({ content, toggle, visibility, title, confirm }) => {
+export default function ({ content, toggle, visibility, title, confirm }) {
 
     const didMountRef = useRef(false);
     const [mount, setMount] = useState(false);
