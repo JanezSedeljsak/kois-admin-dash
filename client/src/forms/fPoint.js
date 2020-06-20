@@ -122,7 +122,7 @@ export default function ({ type }) {
                           plugins: 'advlist autolink lists link',
                           toolbar:
                             'undo redo | bold italic | \
-                            alignleft aligncenter alignright | \
+                            alignleft aligncenter alignright alignjustify | \
                             bullist numlist outdent indent | help'
                         }}
                         onChange={event => setPointForm({ ...pointForm, description: event.level.content })}
